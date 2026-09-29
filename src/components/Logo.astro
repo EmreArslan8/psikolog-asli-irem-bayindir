@@ -1,0 +1,44 @@
+---
+import { site } from '../data/site';
+---
+<a class="logo" href="/" aria-label={`${site.name} — Ana sayfa`}>
+  <span class="mark">
+    <svg viewBox="0 0 64 40" aria-hidden="true">
+      <path d="M2 30c10 2 18-2 22-9 4-7 1-15-5-15s-8 9-2 16c6 7 17 9 26 5 9-4 14-12 19-16" fill="none" stroke="var(--c-accent)" stroke-width="3" stroke-linecap="round" />
+    </svg>
+  </span>
+  <span class="text">
+    <span class="role">{site.title}</span>
+    <span class="name">{site.shortName}</span>
+  </span>
+</a>
+
+<style>
+  .logo { display: inline-flex; align-items: center; gap: var(--s-3); position: relative; z-index: 2; }
+  .mark {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    flex: none;
+    border-radius: 50%;
+    background: var(--c-cream);
+    transition: transform 0.5s var(--ease), background 0.3s;
+  }
+  .mark svg { width: 1.75rem; height: auto; }
+  .logo:hover .mark { transform: rotate(-10deg) scale(1.05); background: var(--c-accent-soft); }
+  .text { display: flex; flex-direction: column; line-height: 1.15; }
+  .role {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--c-accent);
+  }
+  .name {
+    font-family: var(--f-display);
+    font-size: var(--t-h3);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+</style>

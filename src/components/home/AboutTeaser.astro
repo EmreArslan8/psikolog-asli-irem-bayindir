@@ -1,0 +1,56 @@
+---
+import Ribbon from '../Ribbon.astro';
+import { site } from '../../data/site';
+---
+<section class="section about has-ribbon">
+  <Ribbon variant="loop" style="left:-4%;bottom:-8%;width:32rem;opacity:.6" />
+  <Ribbon variant="swirl" style="right:-3%;top:-12%;width:18rem;opacity:.45" />
+  <figure class="container quote reveal">
+    <blockquote>
+      <p>“Her çocuk kendi hızında büyür. Benim işim, o yolculukta hem çocuğa hem de ailesine <em class="accent">güvenli bir durak</em> olmak.”</p>
+    </blockquote>
+    <figcaption>
+      <strong>{site.shortName}</strong>
+      <span>{site.title}</span>
+    </figcaption>
+  </figure>
+</section>
+
+<style>
+  .about { background: var(--c-cream); padding-block: var(--s-8); }
+  .quote { text-align: center; }
+  blockquote p {
+    font-family: var(--f-display);
+    font-size: var(--t-quote);
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    max-width: 40rem;
+    margin-inline: auto;
+    text-wrap: balance;
+  }
+  figcaption {
+    display: grid;
+    justify-items: center;
+    gap: var(--s-1);
+    margin-top: var(--s-5);
+    padding-top: var(--s-4);
+    position: relative;
+  }
+  figcaption::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2.5rem;
+    height: 2px;
+    translate: -50% 0;
+    background: var(--c-accent);
+  }
+  figcaption strong { font-family: var(--f-display); font-weight: 400; font-size: var(--t-h3); }
+  figcaption span {
+    font-size: var(--t-eyebrow);
+    letter-spacing: var(--ls-eyebrow);
+    text-transform: uppercase;
+    color: var(--c-muted);
+  }
+</style>

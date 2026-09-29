@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site';
+---
+<Base title="KVKK Aydınlatma Metni" description="6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında aydınlatma metni.">
+  <PageHero eyebrow="Yasal">
+    <Fragment slot="title">KVKK Aydınlatma Metni</Fragment>
+  </PageHero>
+
+  <section class="section">
+    <article class="container prose">
+      <p>
+        Bu aydınlatma metni, 6698 sayılı Kişisel Verilerin Korunması Kanunu ("KVKK") uyarınca veri sorumlusu
+        sıfatıyla <strong>{site.name}</strong> tarafından, internet sitesi üzerinden paylaştığınız kişisel
+        verilerin işlenmesine ilişkin sizi bilgilendirmek amacıyla hazırlanmıştır.
+      </p>
+      <h2>İşlenen kişisel veriler</h2>
+      <p>Randevu ve iletişim formu aracılığıyla ad-soyad, telefon numarası, e-posta adresi ve mesaj içeriğiniz işlenir.</p>
+      <h2>İşleme amaçları</h2>
+      <p>Verileriniz; randevu talebinizin değerlendirilmesi, sizinle iletişime geçilmesi ve görüşme planlamasının yapılması amaçlarıyla işlenir.</p>
+      <h2>Hukuki sebep ve toplama yöntemi</h2>
+      <p>Verileriniz, internet sitesindeki form aracılığıyla elektronik ortamda; KVKK m.5/2 (c) "sözleşmenin kurulması" ve açık rızanız hukuki sebeplerine dayanılarak toplanır.</p>
+      <h2>Aktarım</h2>
+      <p>Kişisel verileriniz yasal zorunluluklar dışında üçüncü kişilerle paylaşılmaz. Form iletimi için kullanılan e-posta altyapı hizmet sağlayıcısı, yalnızca iletim amacıyla verilere erişebilir.</p>
+      <h2>Haklarınız</h2>
+      <p>KVKK m.11 kapsamında verilerinizin işlenip işlenmediğini öğrenme, düzeltilmesini veya silinmesini isteme ve diğer haklarınızı <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a> adresine yazarak kullanabilirsiniz.</p>
+      <p class="note">Lütfen form üzerinden hassas sağlık bilgisi paylaşmayınız; bu bilgiler görüşme sırasında yüz yüze ele alınır.</p>
+    </article>
+  </section>
+</Base>
+
+<style>
+  .prose { max-width: 46rem; display: grid; gap: var(--s-4); color: var(--c-ink-soft); }
+  h2 { font-size: var(--t-h3); color: var(--c-ink); margin-top: var(--s-5); }
+  a { color: var(--c-primary); text-decoration: underline; }
+  .note { padding: var(--s-4) var(--s-5); border-radius: var(--r-md); background: var(--c-accent-soft); color: var(--c-ink); }
+</style>

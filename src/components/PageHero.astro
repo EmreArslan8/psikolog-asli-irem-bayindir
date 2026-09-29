@@ -1,0 +1,36 @@
+---
+import Ribbon from './Ribbon.astro';
+interface Props { eyebrow: string }
+const { eyebrow } = Astro.props;
+---
+<section class="page-hero has-ribbon">
+  <Ribbon variant="loop" style="left:-6%;bottom:-10%;width:30rem;opacity:.6" />
+  <Ribbon variant="swirl" style="right:-4%;top:6%;width:16rem;opacity:.5" />
+  <div class="container">
+    <p class="eyebrow">{eyebrow}</p>
+    <h1><slot name="title" /></h1>
+    {Astro.slots.has('default') && <p class="lead"><slot /></p>}
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    position: relative;
+    padding-bottom: var(--s-8);
+    border-bottom: 1px solid var(--c-line);
+    background: var(--c-cream);
+    text-align: center;
+    margin-top: -4.75rem;
+    padding-top: calc(4.75rem + var(--s-8));
+  }
+  .eyebrow { justify-content: center; }
+  h1 {
+    font-size: var(--t-h1);
+    letter-spacing: var(--ls-display);
+    line-height: var(--lh-tight);
+    margin-block: var(--s-4);
+    max-width: 44rem;
+    margin-inline: auto;
+  }
+  .lead { max-width: 38rem; margin-inline: auto; }
+</style>

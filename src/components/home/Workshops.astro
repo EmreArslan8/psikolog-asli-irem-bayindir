@@ -1,0 +1,83 @@
+---
+import Icon from '../Icon.astro';
+import Ribbon from '../Ribbon.astro';
+import { workshops, whatsappUrl } from '../../data/site';
+---
+{workshops.length > 0 && (
+  <section class="section workshops has-ribbon">
+    <Ribbon variant="wave" style="left:-10%;bottom:4%;width:48rem;opacity:.4" />
+    <div class="container">
+      <div class="head reveal">
+        <div>
+          <p class="eyebrow">Atölyeler</p>
+          <h2>Birlikte öğrenmek, <em class="accent">birlikte büyümek</em></h2>
+        </div>
+        <p class="lead">Çocuklar, gençler ve ebeveynler için küçük gruplarla, uygulamalı atölyeler düzenliyorum.</p>
+      </div>
+      <ul class="list">
+        {workshops.map((w, i) => (
+          <li class="item reveal" style={`transition-delay:${i * 100}ms`}>
+            <span class="n">0{i + 1}</span>
+            <div>
+              <p class="aud">{w.audience}</p>
+              <h3>{w.title}</h3>
+              <p class="text">{w.text}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <a class="btn btn-primary cta reveal" href={whatsappUrl('Merhaba, atölyeleriniz hakkında bilgi almak istiyorum.')} target="_blank" rel="noopener">
+        Atölyeler hakkında bilgi al <Icon name="arrow" />
+      </a>
+    </div>
+  </section>
+)}
+
+<style>
+  .workshops { background: var(--c-surface); border-block: 1px solid var(--c-line); }
+  .head {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: var(--s-7);
+    align-items: end;
+    margin-bottom: var(--s-7);
+  }
+  h2 { font-size: var(--t-h2); margin-top: var(--s-4); }
+  .list { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); }
+  .item {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: var(--s-5);
+    padding: var(--s-6);
+    border-radius: var(--r-lg);
+    background: var(--c-bg);
+    border: 1px solid var(--c-line);
+    position: relative;
+    overflow: hidden;
+  }
+  .item::after {
+    content: '';
+    position: absolute;
+    right: -2.5rem;
+    top: -2.5rem;
+    width: 6rem;
+    height: 6rem;
+    border: 2px solid var(--c-accent);
+    border-radius: 50%;
+    opacity: 0.35;
+  }
+  .n { font-family: var(--f-display); font-size: var(--t-h2); color: var(--c-accent); line-height: 1; }
+  .aud {
+    font-size: var(--t-eyebrow);
+    letter-spacing: var(--ls-eyebrow);
+    text-transform: uppercase;
+    color: var(--c-muted);
+  }
+  h3 { font-size: var(--t-h3); margin-block: var(--s-2) var(--s-3); }
+  .text { font-size: var(--t-small); color: var(--c-ink-soft); }
+  .cta { margin-top: var(--s-7); }
+  @media (max-width: 960px) {
+    .head { grid-template-columns: 1fr; gap: var(--s-4); }
+    .list { grid-template-columns: 1fr; }
+  }
+</style>

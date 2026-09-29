@@ -1,0 +1,16 @@
+---
+interface Props { eyebrow: string; align?: 'left' | 'center' }
+const { eyebrow, align = 'left' } = Astro.props;
+---
+<div class:list={['head', 'reveal', align]}>
+  <p class="eyebrow">{eyebrow}</p>
+  <h2><slot name="title" /></h2>
+  {Astro.slots.has('default') && <p class="lead"><slot /></p>}
+</div>
+
+<style>
+  .head { max-width: 40rem; margin-bottom: var(--s-7); }
+  .center { margin-inline: auto; text-align: center; }
+  .center .eyebrow { justify-content: center; }
+  h2 { font-size: var(--t-h2); margin-block: var(--s-4); }
+</style>

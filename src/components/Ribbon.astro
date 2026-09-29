@@ -1,0 +1,30 @@
+---
+/**
+ * Marka panosundaki akan kurdele çizgisi — dekoratif desen.
+ * Konum/boyut `style` ile verilir; ebeveyn bölüm `has-ribbon` sınıfını taşımalı (global.css).
+ */
+interface Props {
+  variant?: 'loop' | 'wave' | 'swirl';
+  color?: string;
+  width?: number;
+  class?: string;
+  /** Konum/boyut — ör. 'right:-5%;top:10%;width:40%' */
+  style?: string;
+}
+
+const paths = {
+  loop: { vb: '0 0 600 300', d: 'M-10 250C80 240 140 180 170 120 200 60 160 20 120 40 80 60 100 140 180 160 280 185 360 90 440 70 520 50 580 110 610 140' },
+  wave: { vb: '0 0 800 200', d: 'M-10 120C90 40 180 40 260 110 340 180 430 170 500 100 560 40 640 30 700 80 740 115 790 130 810 120' },
+  swirl: { vb: '0 0 400 400', d: 'M20 380C60 300 130 260 200 270 270 280 300 340 250 360 200 380 170 300 220 240 270 180 360 190 380 110 395 50 340 10 300 40 260 70 300 130 360 110' },
+} as const;
+
+const { variant = 'loop', color = 'var(--c-accent)', width = 2, class: className, style } = Astro.props;
+const p = paths[variant];
+---
+<svg class:list={['ribbon', className]} viewBox={p.vb} fill="none" aria-hidden="true" preserveAspectRatio="xMidYMid meet" style={style}>
+  <path d={p.d} stroke={color} stroke-width={width} stroke-linecap="round" vector-effect="non-scaling-stroke" />
+</svg>
+
+<style>
+  .ribbon { position: absolute; pointer-events: none; z-index: 0; overflow: visible; }
+</style>

@@ -1,0 +1,10 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+---
+<Base title="Sayfa bulunamadı">
+  <PageHero eyebrow="404">
+    <Fragment slot="title">Aradığınız sayfa <em class="accent">bulunamadı</em></Fragment>
+    <a class="btn btn-primary" href="/" style="margin-top: var(--s-5)">Ana sayfaya dön</a>
+  </PageHero>
+</Base>

@@ -1,0 +1,88 @@
+---
+import '@fontsource-variable/fraunces/wght.css';
+import '@fontsource-variable/fraunces/wght-italic.css';
+import '@fontsource-variable/plus-jakarta-sans';
+import frLatin from '@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2?url';
+import frExt from '@fontsource-variable/fraunces/files/fraunces-latin-ext-wght-normal.woff2?url';
+import frItLatin from '@fontsource-variable/fraunces/files/fraunces-latin-wght-italic.woff2?url';
+import frItExt from '@fontsource-variable/fraunces/files/fraunces-latin-ext-wght-italic.woff2?url';
+import pjLatin from '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url';
+import pjExt from '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-ext-wght-normal.woff2?url';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site, institution } from '../data/site';
+
+interface Props { title?: string; description?: string }
+
+const { title, description = site.description } = Astro.props;
+const fullTitle = title ? `${title} | ${site.name}` : `${site.name} — ${site.tagline}`;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Psychologist',
+  name: site.name,
+  description: site.description,
+  url: site.url,
+  telephone: site.contact.phone,
+  email: site.contact.email,
+  areaServed: 'TR',
+  worksFor: { '@type': 'Organization', name: institution.name, ...(institution.url && { url: institution.url }) },
+  ...(site.contact.address && { address: site.contact.address }),
+  ...(site.contact.instagram && { sameAs: [site.contact.instagram] }),
+};
+---
+<!doctype html>
+<html lang="tr" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>document.documentElement.classList.remove('no-js');</script>
+    {[frLatin, frExt, frItLatin, frItExt, pjLatin, pjExt].map((href) => (
+      <link rel="preload" as="font" type="font/woff2" href={href} crossorigin />
+    ))}
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#fff8f1" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="tr_TR" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body>
+    <a class="skip" href="#main">İçeriğe geç</a>
+    <Header />
+    <main id="main"><slot /></main>
+    <Footer />
+    <script>
+      const els = document.querySelectorAll('.reveal');
+      const io = new IntersectionObserver(
+        (entries) => entries.forEach((e) => {
+          if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+        }),
+        { rootMargin: '0px 0px -8% 0px' },
+      );
+      els.forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>
+
+<style>
+  .skip {
+    position: absolute;
+    left: var(--s-4);
+    top: -3rem;
+    z-index: 100;
+    padding: var(--s-2) var(--s-4);
+    border-radius: var(--r-sm);
+    background: var(--c-ink);
+    color: var(--c-bg);
+  }
+  .skip:focus { top: var(--s-4); }
+</style>

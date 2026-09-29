@@ -1,0 +1,58 @@
+---
+import Icon from './Icon.astro';
+import { institution } from '../data/site';
+---
+<section class="section">
+  <div class="container box reveal">
+    <div class="info">
+      <p class="eyebrow">Çalıştığım kurum</p>
+      <h2>{institution.name}</h2>
+      <p class="text">{institution.text}</p>
+      {institution.url && (
+        <a class="link" href={institution.url} target="_blank" rel="noopener">Kurumun web sitesi <Icon name="arrow" /></a>
+      )}
+    </div>
+    <ul>
+      {institution.duties.map((d) => <li><Icon name="check" />{d}</li>)}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .box {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: var(--s-8);
+    align-items: start;
+    padding-block: var(--s-7);
+    border-block: 1px solid var(--c-line);
+  }
+  h2 { font-size: var(--t-h2); margin-block: var(--s-3) var(--s-4); }
+  .text { max-width: 32rem; color: var(--c-ink-soft); line-height: var(--lh-body); }
+  .link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    margin-top: var(--s-5);
+    font-weight: 500;
+    border-bottom: 1px solid var(--c-accent);
+    transition: gap 0.3s var(--ease);
+  }
+  .link:hover { gap: var(--s-3); }
+  .link :global(svg) { width: 1.1rem; height: 1.1rem; }
+  ul { list-style: none; padding: 0; }
+  li {
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+    padding-block: var(--s-4);
+    border-bottom: 1px solid var(--c-line);
+    transition: padding-left 0.35s var(--ease);
+  }
+  li:first-child { padding-top: 0; }
+  li:last-child { border-bottom: 0; padding-bottom: 0; }
+  li:hover { padding-left: var(--s-2); }
+  li :global(svg) { width: 1.1rem; height: 1.1rem; color: var(--c-accent); flex: none; }
+  @media (max-width: 860px) { .box { grid-template-columns: 1fr; gap: var(--s-6); } }
+  @media (prefers-reduced-motion: reduce) { li, .link { transition: none; } }
+</style>

@@ -1,0 +1,67 @@
+/* Tasarım token'ları — renk, tipografi rolleri, boşluk, köşe. Elle px yerine bunlar kullanılır. */
+:root {
+  /* Renk — marka panosu: Mercan #F27666 · Krem #FFF6EB · Koyu Kahve #493731 */
+  --c-bg: #fff6eb;
+  --c-surface: #fffbf6;
+  --c-cream: #fbe9dc;
+  --c-ink: #493731;
+  --c-ink-soft: #6f5a52;
+  --c-muted: #a08c82;
+  --c-line: #efdccd;
+  --c-primary: #493731;
+  --c-primary-ink: #fff6eb;
+  --c-heading: #493731;
+  --c-dark: #493731;
+  --c-accent: #f27666;
+  --c-accent-soft: #fde1d6;
+  --c-coral-light: #f9b8a4;
+  --c-sun: #ffd9c9;
+  --c-whatsapp: #25d366;
+
+  /* Font aileleri */
+  --f-display: 'Fraunces Variable', Georgia, serif;
+  --f-body: 'Plus Jakarta Sans Variable', system-ui, -apple-system, sans-serif;
+
+  /* Tipografi rolleri */
+  --t-display: clamp(2.5rem, 1.6rem + 3.8vw, 4.5rem);
+  --t-h1: clamp(2.25rem, 1.6rem + 2.6vw, 3.5rem);
+  --t-h2: clamp(1.875rem, 1.4rem + 1.8vw, 2.75rem);
+  --t-h3: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+  --t-quote: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+  --t-lead: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  --t-body: 1rem;
+  --t-small: 0.875rem;
+  --t-eyebrow: 0.8125rem;
+
+  --lh-tight: 1.08;
+  --lh-snug: 1.25;
+  --lh-body: 1.65;
+
+  --ls-display: -0.03em;
+  --ls-heading: -0.03em;
+  --ls-eyebrow: 0.14em;
+
+  /* Boşluk */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-section: clamp(4.5rem, 3rem + 6vw, 8rem);
+
+  /* Köşe & gölge */
+  --r-sm: 0.375rem;
+  --r-md: 0.5rem;
+  --r-lg: 0.75rem;
+  --r-pill: 999px;
+  --r-btn: 999px;
+  --shadow-sm: 0 1px 2px rgb(58 41 37 / 0.05), 0 4px 12px rgb(58 41 37 / 0.04);
+  --shadow-md: 0 2px 4px rgb(58 41 37 / 0.05), 0 18px 40px -16px rgb(58 41 37 / 0.2);
+
+  --container: 72rem;
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 2rem);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}

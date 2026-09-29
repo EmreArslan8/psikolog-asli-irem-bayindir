@@ -1,0 +1,57 @@
+---
+/** YouTube videoları link kartı olarak — oynatıcı yüklenmez, tıklayınca YouTube'da açılır. */
+import Icon from '../Icon.astro';
+import { videos, youtubeChannel } from '../../data/site';
+---
+{videos.length > 0 && (
+  <section class="section">
+    <div class="container">
+      <div class="head reveal">
+        <div>
+          <p class="eyebrow">Videolar</p>
+          <h2>Ebeveynler için <em class="accent">kısa rehberler</em></h2>
+        </div>
+        {youtubeChannel && (
+          <a class="btn btn-ghost" href={youtubeChannel} target="_blank" rel="noopener">YouTube kanalı <Icon name="arrow" /></a>
+        )}
+      </div>
+      <div class="grid">
+        {videos.map((v) => (
+          <a class="video reveal" href={`https://www.youtube.com/watch?v=${v.id}`} target="_blank" rel="noopener">
+            <span class="thumb">
+              <img src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`} alt="" width="480" height="360" loading="lazy" />
+              <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor" /></svg></span>
+            </span>
+            <span class="title">{v.title}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .head { display: flex; justify-content: space-between; align-items: end; gap: var(--s-5); flex-wrap: wrap; margin-bottom: var(--s-7); }
+  h2 { font-size: var(--t-h2); margin-top: var(--s-4); }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); }
+  .video { display: grid; align-content: start; gap: var(--s-3); }
+  .thumb { position: relative; aspect-ratio: 16 / 9; border-radius: var(--r-lg); overflow: hidden; background: var(--c-cream); }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
+  .video:hover .thumb img { transform: scale(1.05); }
+  .play {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    translate: -50% -50%;
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background: var(--c-accent);
+    color: #fff;
+    box-shadow: var(--shadow-md);
+  }
+  .play svg { width: 1.4rem; height: 1.4rem; margin-left: 0.15rem; }
+  .title { font-family: var(--f-display); font-size: var(--t-h3); letter-spacing: -0.02em; line-height: var(--lh-snug); }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; max-width: 30rem; } }
+</style>

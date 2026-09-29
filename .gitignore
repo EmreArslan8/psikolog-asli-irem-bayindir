@@ -1,0 +1,42 @@
+# build output
+dist/
+.vercel/
+# generated types
+.astro/
+
+# caches and local previews
+.cache/
+.vite/
+*.tsbuildinfo
+/design-previews/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+
+# environment variables
+.env
+.env.*
+
+# macOS-specific files
+.DS_Store
+
+# jetbrains setting folder
+.idea/
+
+# local editor configuration
+.vscode/launch.json
+.vscode/extensions.json
+
+# local AI assistant instructions
+CLAUDE.md
+
+# tests (yalnızca yerelde)
+tests/

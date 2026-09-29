@@ -1,0 +1,102 @@
+---
+import Icon from '../Icon.astro';
+import HeroArt from './HeroArt.astro';
+import { site } from '../../data/site';
+---
+<section class="hero">
+  <div class="blob" aria-hidden="true"></div>
+  <div class="container grid">
+    <div class="copy">
+      <h1>Her ailenin <em>hikâyesi</em> kendine özgüdür.</h1>
+      <p class="sub">Çocuk · Ergen · Ebeveyn Danışmanlığı</p>
+      <p class="lead">Yüz yüze ve online görüşmelerle ailenize güvenli, sıcak ve bilimsel bir destek alanı.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="/randevu">Randevu Al <Icon name="arrow" /></a>
+        <a class="btn-ghost" href="/hakkimda">Hakkımda</a>
+      </div>
+      <ul class="facts">
+        <li><Icon name="pin" />{site.contact.address}</li>
+        <li><Icon name="clock" />{site.contact.hours}</li>
+      </ul>
+    </div>
+
+    <div class="visual">
+      <div class="float"><HeroArt /></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero { position: relative; padding-block: var(--s-7) calc(var(--s-section) + var(--s-6)); overflow-x: clip; }
+  .blob {
+    position: absolute;
+    right: -10%;
+    top: -20%;
+    width: 60vw;
+    max-width: 52rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, var(--c-accent-soft), transparent 70%);
+    opacity: 0.7;
+    pointer-events: none;
+  }
+  .grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: center;
+    gap: var(--s-7);
+  }
+  h1 {
+    font-size: var(--t-display);
+    font-weight: 400;
+    line-height: var(--lh-tight);
+    letter-spacing: var(--ls-display);
+    max-width: 14ch;
+  }
+  h1 em { font-style: italic; color: var(--c-accent); }
+  .sub {
+    margin-top: var(--s-5);
+    font-family: var(--f-display);
+    font-size: var(--t-lead);
+    letter-spacing: 0.06em;
+  }
+  .lead { margin-top: var(--s-3); max-width: 30rem; color: var(--c-ink-soft); line-height: var(--lh-body); }
+  .actions { margin-top: var(--s-6); display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4); }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    padding: 0.85rem 1.4rem;
+    border-radius: var(--r-btn);
+    border: 1px solid var(--c-line);
+    background: var(--c-surface);
+    font-weight: 500;
+    transition: border-color 0.3s, transform 0.3s var(--ease);
+  }
+  .btn-ghost:hover { border-color: var(--c-accent); transform: translateY(-2px); }
+  .facts {
+    margin-top: var(--s-6);
+    padding: var(--s-4) 0 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-3) var(--s-5);
+    border-top: 1px solid var(--c-line);
+    font-size: var(--t-small);
+    color: var(--c-ink-soft);
+  }
+  .facts li { display: inline-flex; align-items: center; gap: var(--s-2); }
+  .facts :global(svg) { width: 1.05rem; height: 1.05rem; color: var(--c-accent); }
+
+  .visual { position: relative; width: 100%; max-width: 30rem; justify-self: center; }
+  .float { animation: float 7s ease-in-out infinite; }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  @media (max-width: 800px) {
+    .hero { padding-block: var(--s-5) calc(var(--s-section) + var(--s-4)); }
+    .grid { grid-template-columns: 1fr; gap: var(--s-6); }
+    .visual { max-width: 22rem; order: -1; }
+    h1 { max-width: 16ch; }
+  }
+  @media (prefers-reduced-motion: reduce) { .float { animation: none; } }
+</style>

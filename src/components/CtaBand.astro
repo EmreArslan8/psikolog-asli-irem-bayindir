@@ -1,0 +1,51 @@
+---
+import Icon from './Icon.astro';
+import Ribbon from './Ribbon.astro';
+import { site, whatsappUrl } from '../data/site';
+---
+<section class="cta has-ribbon">
+  <Ribbon variant="loop" color="rgb(255 255 255 / 0.4)" style="right:-4%;top:-20%;width:40rem" />
+  <div class="container inner reveal">
+    <div>
+      <p class="eyebrow">Randevu</p>
+      <h2>İlk adımı atmak için <em class="accent">doğru zaman</em> şimdi.</h2>
+    </div>
+
+    <div class="side">
+      <p class="sub">Ön görüşme için bana yazın; size en kısa sürede dönüş yapayım.</p>
+      <div class="actions">
+        <a class="btn b-dark" href="/randevu">Randevu Al <Icon name="arrow" /></a>
+        <a class="btn b-light" href={whatsappUrl()} target="_blank" rel="noopener"><Icon name="whatsapp" /> WhatsApp</a>
+        {site.contact.instagram && (
+          <a class="btn b-light" href={site.contact.instagram} target="_blank" rel="noopener"><Icon name="instagram" /> Instagram</a>
+        )}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta { background: var(--c-accent); color: #fff; padding-block: var(--s-8); }
+  .inner { display: grid; grid-template-columns: 1.1fr 1fr; gap: var(--s-8); align-items: center; }
+  .eyebrow { color: #fff; }
+  .eyebrow::before { background: #fff; }
+  h2 { color: #fff; font-size: var(--t-h1); line-height: var(--lh-tight); letter-spacing: var(--ls-display); margin-top: var(--s-4); }
+  .cta em.accent { color: var(--c-dark); }
+  .sub { color: rgb(255 255 255 / 0.9); margin-bottom: var(--s-5); max-width: 28rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+  .actions .btn { white-space: nowrap; }
+  .b-dark { background: var(--c-dark); color: #fff; }
+  .b-dark:hover { background: #3a2b26; }
+  .b-light { background: var(--c-bg); color: var(--c-ink); }
+  .b-light:hover { background: #fff; }
+  .b-light :global(svg) { color: var(--c-accent); }
+  @media (max-width: 900px) { .inner { grid-template-columns: 1fr; gap: var(--s-5); } }
+  @media (max-width: 600px) {
+    .cta { padding-block: var(--s-7); }
+    h2 { font-size: var(--t-h2); }
+    .sub { margin-bottom: var(--s-4); }
+    .actions { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-2); }
+    .actions .btn { justify-content: center; padding-inline: var(--s-3); }
+    .actions .b-dark { grid-column: 1 / -1; }
+  }
+</style>

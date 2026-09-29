@@ -1,0 +1,101 @@
+@import './tokens.css';
+
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: clip; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+body {
+  background: var(--c-bg);
+  color: var(--c-ink);
+  font-family: var(--f-body);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button, input, textarea, select { font: inherit; color: inherit; }
+
+h1, h2 { color: var(--c-heading); }
+h1, h2, h3, h4 {
+  font-family: var(--f-display);
+  font-weight: 450;
+  letter-spacing: var(--ls-heading);
+  line-height: var(--lh-snug);
+  font-variation-settings: 'SOFT' 0, 'WONK' 0;
+  text-wrap: balance;
+}
+p { text-wrap: pretty; }
+
+em.accent {
+  font-style: italic;
+  color: var(--c-accent);
+  font-variation-settings: 'SOFT' 0, 'WONK' 0;
+}
+
+:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 3px; border-radius: 4px; }
+
+/* Düzen */
+.container { width: min(100% - 2 * var(--gutter), var(--container)); margin-inline: auto; }
+.section { padding-block: var(--s-section); }
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: var(--t-eyebrow);
+  font-weight: 600;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--c-primary);
+}
+.eyebrow::before {
+  content: '';
+  width: 1.5rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--c-accent);
+}
+
+.lead { font-size: var(--t-lead); color: var(--c-ink-soft); }
+
+/* Dekoratif kurdele deseni taşıyan bölümler */
+.has-ribbon { position: relative; overflow: clip; }
+.has-ribbon > .container { position: relative; z-index: 1; }
+
+/* Butonlar */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  padding: 0.9rem 1.5rem;
+  border-radius: var(--r-btn);
+  border: 1px solid transparent;
+  font-weight: 600;
+  font-size: var(--t-body);
+  line-height: 1.2;
+  cursor: pointer;
+  transition: transform 0.25s var(--ease), background-color 0.25s, box-shadow 0.25s, color 0.25s;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn svg { width: 1.15em; height: 1.15em; flex: none; }
+.btn-primary { background: var(--c-primary); color: var(--c-primary-ink); box-shadow: var(--shadow-sm); }
+.btn-primary:hover { background: var(--c-accent); box-shadow: var(--shadow-md); }
+.btn-ghost { border-color: var(--c-line); background: var(--c-surface); }
+.btn-ghost:hover { border-color: var(--c-ink); }
+.btn-whatsapp { background: #1ea952; color: #fff; }
+.btn-whatsapp:hover { box-shadow: var(--shadow-md); }
+
+/* Kaydırınca beliren içerik */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
+.reveal.is-visible { opacity: 1; transform: none; }
+.no-js .reveal { opacity: 1; transform: none; }

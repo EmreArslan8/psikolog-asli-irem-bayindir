@@ -1,0 +1,137 @@
+---
+import { principles } from '../../data/site';
+
+/** İlke başına marka stilinde küçük illüstrasyon (sırası principles ile aynı). */
+const art = [
+  // Güvenli alan — kemer içinde kalp
+  `<path d="M14 58V32a18 18 0 0 1 36 0v26z" fill="#fde1d6"/>
+   <path d="M14 58V32a18 18 0 0 1 36 0v26" stroke="#f27666" stroke-width="2"/>
+   <path class="a-heart" d="M32 47s-9-5.4-9-11.2a5 5 0 0 1 9-3 5 5 0 0 1 9 3C41 41.6 32 47 32 47z" fill="#f27666"/>`,
+  // Bilimsel yaklaşım — açık kitap ve filiz
+  `<path d="M8 44c8-3 16-3 24 2 8-5 16-5 24-2V20c-8-3-16-3-24 2-8-5-16-5-24-2z" fill="#fde1d6"/>
+   <path d="M32 22v24M8 44c8-3 16-3 24 2 8-5 16-5 24-2V20c-8-3-16-3-24 2-8-5-16-5-24-2z" stroke="#493731" stroke-width="1.8" stroke-linejoin="round"/>
+   <path class="a-sprout" d="M32 18c0-6 3-10 9-11-1 6-4 10-9 11zM32 18c-1-5-4-8-8-8 0 5 3 8 8 8z" fill="#f27666"/>`,
+  // Yaşa uygun — büyüyen daireler
+  `<path d="M6 54h52" stroke="#493731" stroke-width="1.8" stroke-linecap="round"/>
+   <circle class="a-c1" cx="14" cy="47" r="6" fill="#f9b8a4"/>
+   <circle class="a-c2" cx="29" cy="42" r="10" fill="#f59a82"/>
+   <circle class="a-c3" cx="47" cy="36" r="15" fill="#f27666"/>
+   <path class="a-dash" d="M10 30c6-8 14-12 24-12" stroke="#f27666" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="2 4"/>`,
+  // Aileyle birlikte — iç içe aile figürleri
+  `<g class="a-p1"><circle cx="22" cy="20" r="8" fill="#f27666"/><path d="M10 58c0-15 5-26 12-28 8-2 13 10 13 28z" fill="#f27666"/></g>
+   <g class="a-p2"><circle cx="42" cy="22" r="7" fill="#f59a82"/><path d="M30 58c0-13 5-22 12-23 8-1 12 9 12 23z" fill="#f59a82"/></g>
+   <g class="a-p3"><circle cx="32" cy="38" r="5" fill="#fde1d6" stroke="#fff6eb" stroke-width="1.5"/><path d="M25 58c0-8 3-13 7-14 5-1 7 6 7 14z" fill="#fde1d6" stroke="#fff6eb" stroke-width="1.5"/></g>`,
+];
+---
+<section class="principles" aria-label="Çalışma ilkelerim">
+  <div class="container">
+    <ul class="grid">
+      {principles.map((p, i) => (
+        <li class="card reveal" style={`transition-delay:${i * 80}ms`}>
+          <div class="visual">
+            <svg class="ill" viewBox="0 0 64 64" fill="none" aria-hidden="true" set:html={art[i % art.length]} />
+          </div>
+          <span class="bar"></span>
+          <h3>{p.title}</h3>
+          <p>{p.text}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .principles { margin-top: calc(-1 * var(--s-7)); position: relative; z-index: 1; }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-5); list-style: none; padding: 0; }
+  .card {
+    --mx: 0; --my: 0;
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: var(--s-2);
+    padding: var(--s-4) 0;
+    transition: transform 0.5s var(--ease), opacity 0.8s var(--ease);
+  }
+  .card:hover { transform: translateY(-6px); }
+  .visual {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 6.5rem;
+    height: 6.5rem;
+    margin-bottom: var(--s-3);
+    border-radius: 42% 58% 55% 45% / 48% 42% 58% 52%;
+    background: var(--c-cream);
+    box-shadow: inset 0 0 0 1px #fff6eb;
+    transition: border-radius 0.9s var(--ease), background 0.4s;
+  }
+  .card:hover .visual { border-radius: 55% 45% 42% 58% / 52% 58% 42% 48%; background: var(--c-accent-soft); }
+  .ill {
+    width: 4.5rem;
+    height: 4.5rem;
+    overflow: visible;
+    transform: translate(calc(var(--mx) * 5px), calc(var(--my) * 5px));
+    transition: transform 0.25s ease-out;
+  }
+  .bar { width: 2rem; height: 2px; margin-top: var(--s-2); background: var(--c-accent); transition: width 0.5s var(--ease); }
+  .card:hover .bar { width: 3.5rem; }
+  h3 { font-size: var(--t-h3); }
+  p { font-size: var(--t-small); color: var(--c-ink-soft); line-height: 1.6; }
+
+  /* Hover: illüstrasyon canlanır */
+  .ill :global(*) { transform-box: fill-box; transform-origin: center; }
+  .ill :global(.a-heart) { transform-origin: 50% 60%; }
+  .card:hover .ill :global(.a-heart) { animation: beat 1.1s ease-in-out infinite; }
+  .card:hover .ill :global(.a-sprout) { animation: sway 1.8s ease-in-out infinite; transform-origin: 50% 100%; }
+  .card:hover .ill :global(.a-c1) { animation: hop 1s ease-in-out infinite; }
+  .card:hover .ill :global(.a-c2) { animation: hop 1s ease-in-out 0.15s infinite; }
+  .card:hover .ill :global(.a-c3) { animation: hop 1s ease-in-out 0.3s infinite; }
+  .card:hover .ill :global(.a-dash) { animation: march 1s linear infinite; }
+  .card:hover .ill :global(.a-p1) { animation: lean-l 2s ease-in-out infinite; transform-origin: 50% 100%; }
+  .card:hover .ill :global(.a-p2) { animation: lean-r 2s ease-in-out 0.2s infinite; transform-origin: 50% 100%; }
+  .card:hover .ill :global(.a-p3) { animation: hop 1.4s ease-in-out 0.1s infinite; }
+  @keyframes beat { 0%, 100% { transform: scale(1); } 30% { transform: scale(1.22); } 55% { transform: scale(1.05); } }
+  @keyframes sway { 0%, 100% { transform: rotate(-6deg) scale(1); } 50% { transform: rotate(7deg) scale(1.12); } }
+  @keyframes hop { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+  @keyframes march { to { stroke-dashoffset: -12; } }
+  @keyframes lean-l { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-4deg); } }
+  @keyframes lean-r { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(4deg); } }
+
+  @media (max-width: 960px) { .grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) {
+    .principles { margin-top: 0; }
+    .grid { grid-template-columns: 1fr; gap: 0; }
+    .card {
+      grid-template-columns: auto 1fr;
+      column-gap: var(--s-4);
+      align-items: center;
+      padding: var(--s-4) 0;
+      border-bottom: 1px solid var(--c-line);
+    }
+    .card:last-child { border-bottom: 0; }
+    .visual { grid-row: span 2; width: 4.5rem; height: 4.5rem; margin-bottom: 0; }
+    .ill { width: 3rem; height: 3rem; }
+    .bar { display: none; }
+    h3 { align-self: end; }
+    p { align-self: start; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card, .ill, .visual, .bar { transition: none; }
+    .card:hover .ill :global(*) { animation: none !important; }
+  }
+</style>
+
+<script>
+  // İllüstrasyon imleci hafifçe "izler"
+  document.querySelectorAll<HTMLElement>('.principles .card').forEach((card) => {
+    card.addEventListener('pointermove', (e) => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', String(((e.clientX - r.left) / r.width - 0.5) * 2));
+      card.style.setProperty('--my', String(((e.clientY - r.top) / r.height - 0.5) * 2));
+    });
+    card.addEventListener('pointerleave', () => {
+      card.style.setProperty('--mx', '0');
+      card.style.setProperty('--my', '0');
+    });
+  });
+</script>

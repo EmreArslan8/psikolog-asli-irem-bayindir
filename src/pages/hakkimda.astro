@@ -1,0 +1,81 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Portrait from '../components/Portrait.astro';
+import Icon from '../components/Icon.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Institution from '../components/Institution.astro';
+import { about, principles } from '../data/site';
+---
+<Base title="Hakkımda" description="Psikolog Aslı İrem Bayındır'ın eğitimi, çalışma yaklaşımı ve çocuk, ergen ve ebeveynlerle çalışma ilkeleri.">
+  <PageHero eyebrow="Hakkımda">
+    <Fragment slot="title">Merhaba, ben <em class="accent">Aslı İrem</em>.</Fragment>
+  </PageHero>
+
+  <section class="section intro">
+    <div class="container grid">
+      <div class="reveal"><Portrait /></div>
+      <div class="copy reveal">
+        <p class="big">{about.intro}</p>
+        {about.paragraphs.map((p) => <p>{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section cv">
+    <div class="container cols">
+      <div class="block reveal">
+        <h2>Eğitim</h2>
+        <ul class="timeline">
+          {about.education.map((e) => (
+            <li><strong>{e.title}</strong><span>{e.place}</span></li>
+          ))}
+        </ul>
+      </div>
+      <div class="block reveal">
+        <h2>Aldığım eğitimler</h2>
+        <ul class="checks">
+          {about.trainings.map((t) => <li><Icon name="check" />{t}</li>)}
+        </ul>
+      </div>
+      <div class="block reveal">
+        <h2>Çalışma ilkelerim</h2>
+        <ul class="checks">
+          {principles.map((p) => <li><Icon name="check" /><span><strong>{p.title}:</strong> {p.text}</span></li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <Institution />
+
+  <CtaBand />
+</Base>
+
+<style>
+  .intro { padding-top: var(--s-8); }
+  .grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: var(--s-8); align-items: center; }
+  .copy { display: grid; gap: var(--s-4); color: var(--c-ink-soft); font-size: var(--t-lead); }
+  .big {
+    font-family: var(--f-display);
+    font-size: var(--t-h3);
+    line-height: 1.45;
+    letter-spacing: -0.02em;
+    color: var(--c-ink);
+  }
+  .cv { padding-top: 0; }
+  .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); }
+  .block { padding: var(--s-6); border-radius: var(--r-lg); background: var(--c-surface); border: 1px solid var(--c-line); }
+  h2 { font-size: var(--t-h3); margin-bottom: var(--s-5); }
+  ul { list-style: none; padding: 0; display: grid; gap: var(--s-4); }
+  .timeline li { display: grid; padding-left: var(--s-4); border-left: 2px solid var(--c-accent); }
+  .timeline span { font-size: var(--t-small); color: var(--c-muted); }
+  .checks li { display: flex; gap: var(--s-3); color: var(--c-ink-soft); font-size: var(--t-small); }
+  .checks :global(svg) { width: 1.1rem; height: 1.1rem; flex: none; color: var(--c-primary); margin-top: 0.15rem; }
+  .checks strong { color: var(--c-ink); }
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr; gap: var(--s-7); }
+    .grid > :first-child { max-width: 22rem; margin-inline: auto; width: 100%; }
+    .cols { grid-template-columns: 1fr; }
+  }
+</style>

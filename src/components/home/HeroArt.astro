@@ -1,0 +1,39 @@
+---
+/** Marka panosundaki kemer içi aile illüstrasyonunun SVG yorumu. */
+---
+<svg class="art" viewBox="0 0 480 520" role="img" aria-label="Ebeveyn ve çocuklardan oluşan aile illüstrasyonu">
+  <defs>
+    <clipPath id="arch"><path d="M60 520V230a180 180 0 0 1 360 0v290z" /></clipPath>
+  </defs>
+  <path d="M60 520V230a180 180 0 0 1 360 0v290z" fill="#fbe0d2" />
+  <g clip-path="url(#arch)">
+    <!-- Anne -->
+    <circle cx="200" cy="170" r="48" fill="#ef6a58" />
+    <path d="M120 520c-6-120 10-240 80-270 58-24 104 30 108 120l6 150z" fill="#ef6a58" />
+    <!-- Baba -->
+    <circle cx="318" cy="230" r="40" fill="#f59a82" />
+    <path d="M240 520c0-110 20-190 78-196 60-6 90 70 94 196z" fill="#f59a82" />
+    <!-- Ergen -->
+    <circle cx="258" cy="298" r="34" fill="#f8c1ad" stroke="#fff6eb" stroke-width="3" />
+    <path d="M196 520c-2-80 14-150 62-168 50-16 78 50 80 168z" fill="#f8c1ad" stroke="#fff6eb" stroke-width="3" />
+    <!-- Çocuk -->
+    <circle cx="190" cy="392" r="26" fill="#e2604f" />
+    <path d="M150 520c0-54 12-92 40-100 30-6 48 40 50 100z" fill="#e2604f" />
+    <path d="M214 450c18 6 34 2 46-10" fill="none" stroke="#fff6eb" stroke-width="3" stroke-linecap="round" />
+  </g>
+  <path
+    class="ribbon"
+    d="M8 470c40 30 110 10 120-40 10-44-40-60-50-20-12 50 70 70 130 40 70-34 120-110 210-80 40 14 44 70 10 76-34 6-40-50-6-92 30-38 60-80 44-150-8-36-44-40-44-6 0 30 40 40 56 10"
+    fill="none"
+    stroke="var(--c-accent)"
+    stroke-width="3"
+    stroke-linecap="round"
+  />
+</svg>
+
+<style>
+  .art { width: 100%; height: auto; overflow: visible; }
+  .ribbon { stroke-dasharray: 1600; stroke-dashoffset: 1600; animation: draw 2.4s var(--ease) 0.3s forwards; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @media (prefers-reduced-motion: reduce) { .ribbon { stroke-dashoffset: 0; } }
+</style>

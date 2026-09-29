@@ -1,0 +1,105 @@
+---
+import Icon from '../Icon.astro';
+import Ribbon from '../Ribbon.astro';
+import { services } from '../../data/site';
+---
+<section class="section has-ribbon">
+  <Ribbon variant="swirl" style="right:-6%;top:2%;width:26rem;opacity:.55" />
+  <div class="container">
+    <div class="head reveal">
+      <div>
+        <p class="eyebrow">Hizmetler</p>
+        <h2>Her yaşın kendi dili, <em class="accent">her ailenin</em> kendi hikâyesi var.</h2>
+      </div>
+      <p class="lead">Görüşmeleri çocuğun gelişim dönemine ve ailenin ihtiyacına göre planlıyorum.</p>
+    </div>
+
+    <div class="grid">
+      {services.map((s, i) => (
+        <a class="card reveal" href={`/randevu?hizmet=${s.slug}`} style={`transition-delay:${i * 100}ms`}>
+          <div class="art">
+            <img src={s.image} alt="" width="320" height="240" loading="lazy" />
+            <span class="age">{s.age}</span>
+          </div>
+          <div class="body">
+            <span class="n">0{i + 1}</span>
+            <h3>{s.title}</h3>
+            <p>{s.summary}</p>
+            <ul class="chips">{s.chips.map((c) => <li>{c}</li>)}</ul>
+            <span class="more">Randevu Al <Icon name="arrow" /></span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .head {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: var(--s-7);
+    align-items: end;
+    margin-bottom: var(--s-7);
+  }
+  h2 { font-size: var(--t-h2); margin-top: var(--s-4); }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); }
+  .card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--c-line);
+    border-radius: var(--r-lg);
+    background: var(--c-surface);
+    overflow: hidden;
+    transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease), border-color 0.3s, opacity 0.8s var(--ease);
+  }
+  .card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: transparent; }
+  .art {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background: var(--c-cream);
+  }
+  .art img { position: absolute; inset: var(--s-6); width: calc(100% - 2 * var(--s-6)); height: calc(100% - 2 * var(--s-6)); object-fit: contain; transition: transform 0.6s var(--ease); }
+  .card:hover .art img { transform: scale(1.04); }
+  .age {
+    position: absolute;
+    top: var(--s-4);
+    left: var(--s-4);
+    padding: var(--s-1) var(--s-3);
+    border-radius: var(--r-sm);
+    background: var(--c-surface);
+    font-size: var(--t-eyebrow);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .body { display: flex; flex-direction: column; gap: var(--s-3); padding: var(--s-6); flex: 1; }
+  .n { font-size: var(--t-eyebrow); letter-spacing: var(--ls-eyebrow); color: var(--c-accent); font-weight: 600; }
+  h3 { font-size: var(--t-h3); }
+  p { color: var(--c-ink-soft); font-size: var(--t-small); }
+  .chips { display: flex; flex-wrap: wrap; gap: var(--s-2); list-style: none; padding: 0; margin-top: var(--s-2); }
+  .chips li {
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--r-pill);
+    background: var(--c-accent-soft);
+    font-size: var(--t-small);
+    font-weight: 500;
+    color: var(--c-ink);
+  }
+  .more {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    margin-top: auto;
+    padding-top: var(--s-4);
+    border-top: 1px solid var(--c-line);
+    font-size: var(--t-small);
+    font-weight: 600;
+    color: var(--c-primary);
+  }
+  .more :global(svg) { width: 1rem; height: 1rem; transition: transform 0.3s var(--ease); }
+  .card:hover .more :global(svg) { transform: translateX(4px); }
+  @media (max-width: 960px) {
+    .head { grid-template-columns: 1fr; gap: var(--s-4); }
+    .grid { grid-template-columns: 1fr; max-width: 30rem; }
+  }
+</style>
