@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { posts } from '../../data/site';
+
+export function getStaticPaths() {
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+const { post } = Astro.props;
+const fmt = new Intl.DateTimeFormat('tr-TR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+---
+<Base title={post.title} description={post.excerpt}>
+  <article class="section post">
+    <div class="container narrow">
+      <a class="back" href="/blog">← Tüm yazılar</a>
+      <p class="meta"><span class="cat">{post.category}</span> <time datetime={post.date}>{fmt.format(new Date(post.date))}</time></p>
+      <h1>{post.title}</h1>
+      <div class="body">{post.body.map((p) => <p>{p}</p>)}</div>
+    </div>
+  </article>
+  <CtaBand />
+</Base>
+
+<style>
+  .post { padding-top: var(--s-7); }
+  .narrow { max-width: 42rem; }
+  .back { font-size: var(--t-small); color: var(--c-ink-soft); }
+  .back:hover { color: var(--c-ink); }
+  .meta { display: flex; align-items: center; gap: var(--s-3); margin-top: var(--s-5); font-size: var(--t-small); color: var(--c-muted); }
+  .cat { padding: 0.25rem 0.75rem; border-radius: var(--r-pill); background: var(--c-accent-soft); color: var(--c-ink); }
+  h1 { font-size: var(--t-h1); line-height: var(--lh-tight); letter-spacing: var(--ls-display); margin-block: var(--s-4) var(--s-6); }
+  .body { display: grid; gap: var(--s-5); font-size: var(--t-lead); line-height: var(--lh-body); color: var(--c-ink-soft); }
+</style>

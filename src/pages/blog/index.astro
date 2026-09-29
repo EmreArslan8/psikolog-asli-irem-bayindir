@@ -1,0 +1,30 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import PostCard from '../../components/PostCard.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { posts } from '../../data/site';
+
+const sorted = [...posts].sort((a, b) => b.date.localeCompare(a.date));
+---
+<Base title="Blog" description="Çocuk, ergen ve ebeveyn danışmanlığı üzerine yazılar.">
+  <PageHero eyebrow="Blog">
+    <Fragment slot="title">Ailelere <em class="accent">yazılar</em></Fragment>
+    Çocuk, ergen ve ebeveynlik üzerine kısa ve uygulanabilir notlar.
+  </PageHero>
+
+  <section class="section list">
+    <div class="container grid">
+      {sorted.map((p, n) => <PostCard post={p} delay={n * 60} />)}
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .list { padding-top: var(--s-8); }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); }
+  @media (max-width: 960px) { .grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+</style>

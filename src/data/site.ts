@@ -33,6 +33,8 @@ export const nav = [
   { href: '/', label: 'Ana Sayfa' },
   { href: '/hakkimda', label: 'Hakkımda' },
   { href: '/hizmetler', label: 'Hizmetler' },
+  { href: '/atolyeler', label: 'Atölyeler' },
+  { href: '/blog', label: 'Blog' },
   { href: '/iletisim', label: 'İletişim' },
 ] as const;
 
@@ -133,11 +135,88 @@ export const institution = {
   duties: ['Çocuk ve ergen görüşmeleri', 'Ebeveyn danışmanlığı', 'Aile görüşmeleri', 'Grup çalışmaları ve atölyeler'],
 };
 
+/** Görüşme ücretleri (TL). Bir alan null ise o satır gizlenir. */
+// TODO: gerçek ücretler
+export const fees = {
+  online: 1500 as number | null,
+  faceToFace: 2000 as number | null,
+};
+
+/** Atölye ödemesi için banka bilgileri. iban null ise ödeme bölümü gizlenir. */
+// TODO: gerçek IBAN ve hesap sahibi
+export const payment = {
+  holder: 'Aslı İrem Bayındır',
+  bank: 'Banka adı',
+  iban: 'TR00 0000 0000 0000 0000 0000 00' as string | null,
+};
+
+export type Workshop = {
+  title: string;
+  audience: string;
+  text: string;
+  /** Örn. '12 Ekim 2026' — boşsa "Tarih yakında" yazılır */
+  date?: string;
+  time?: string;
+  format?: string;
+  /** TL; yoksa "Bilgi için yazın" */
+  price?: number;
+  /** Afiş görseli (public/ altındaki yol, örn. '/atolyeler/duygular.jpg'); yoksa otomatik afiş kartı gösterilir */
+  image?: string;
+};
+
 // TODO: müşteriden gelecek gerçek atölye listesiyle değiştirilecek
-export const workshops = [
-  { title: 'Duygularımı Tanıyorum', audience: 'Çocuk atölyesi · 5–10 yaş', text: 'Oyun ve hikâyelerle çocukların duygularını tanıması, adlandırması ve ifade etmesi üzerine grup çalışması.' },
-  { title: 'Sınır Koymak İlişkiye Alan Açar', audience: 'Ebeveyn atölyesi', text: 'Sevgiyle ve tutarlılıkla sınır koymanın yollarını, gerçek örnekler üzerinden birlikte konuştuğumuz buluşma.' },
-  { title: 'Sınav Kaygısıyla Baş Etmek', audience: 'Ergen atölyesi · 13–18 yaş', text: 'Kaygıyı tanıma, düzenleme ve çalışma rutini oluşturma üzerine uygulamalı bir atölye.' },
+export const workshops: Workshop[] = [
+  { title: 'Duygularımı Tanıyorum', audience: 'Çocuk atölyesi · 5–10 yaş', text: 'Oyun ve hikâyelerle çocukların duygularını tanıması, adlandırması ve ifade etmesi üzerine grup çalışması.', date: '12 Ekim 2026', time: '11.00 – 12.30', format: 'Yüz yüze', price: 500 },
+  { title: 'Sınır Koymak İlişkiye Alan Açar', audience: 'Ebeveyn atölyesi', text: 'Sevgiyle ve tutarlılıkla sınır koymanın yollarını, gerçek örnekler üzerinden birlikte konuştuğumuz buluşma.', date: '19 Ekim 2026', time: '20.00 – 21.30', format: 'Online', price: 400 },
+  { title: 'Sınav Kaygısıyla Baş Etmek', audience: 'Ergen atölyesi · 13–18 yaş', text: 'Kaygıyı tanıma, düzenleme ve çalışma rutini oluşturma üzerine uygulamalı bir atölye.', date: '26 Ekim 2026', time: '15.00 – 16.30', format: 'Yüz yüze', price: 500 },
+];
+
+export type Post = {
+  slug: string;
+  title: string;
+  date: string;
+  category: string;
+  excerpt: string;
+  body: string[];
+  /** Kapak görseli (public/ altındaki yol); yoksa kategoriye göre otomatik illüstrasyon kapak gösterilir */
+  image?: string;
+};
+
+// TODO: DEMO — yer tutucu kısa yazılar; müşterinin kendi yazılarıyla değiştirilecek
+export const posts: Post[] = [
+  {
+    slug: 'cocuklarda-oyunun-onemi',
+    title: 'Çocuklar için oyun neden bu kadar önemli?',
+    date: '2026-09-15',
+    category: 'Çocuk',
+    excerpt: 'Oyun, çocuğun duygularını ve dünyayı anlamlandırdığı en doğal dildir.',
+    body: [
+      'Çocuklar duygularını çoğu zaman sözcüklerle anlatamaz; oyun ise onların kendilerini en rahat ifade ettiği alandır. Bir oyuncak bebekle kurulan sahne, çoğu zaman çocuğun gün içinde yaşadığı bir duygunun sessiz anlatımıdır.',
+      'Ebeveyn olarak yapabileceğiniz en değerli şeylerden biri, günün belli bir bölümünde çocuğunuzun yönettiği bir oyuna eşlik etmektir. Yönlendirmeden, düzeltmeden, yalnızca izleyip eşlik ederek.',
+    ],
+  },
+  {
+    slug: 'ergenle-iletisim',
+    title: 'Ergenle iletişimde küçük ama etkili adımlar',
+    date: '2026-09-22',
+    category: 'Ergen',
+    excerpt: 'Konuşmayan bir ergenle bağ kurmanın yolu, çoğu zaman daha az soru sormaktan geçer.',
+    body: [
+      'Ergenlik, bağımsızlık ihtiyacının arttığı bir dönemdir. Bu dönemde sorgu gibi hissettiren sorular, gençleri daha da kapanmaya iter.',
+      'Yan yana yapılan bir aktivite, araba yolculuğu ya da ortak bir dizi çoğu zaman sohbeti kendiliğinden başlatır. Önce dinleyin, çözümü sonraya bırakın.',
+    ],
+  },
+  {
+    slug: 'sinir-koymak',
+    title: 'Sevgiyle sınır koymak mümkün mü?',
+    date: '2026-09-28',
+    category: 'Ebeveyn',
+    excerpt: 'Tutarlı ve sıcak sınırlar, çocuğa güven duygusu verir.',
+    body: [
+      'Sınır, çocuğu kısıtlamak değil, ona güvenli bir çerçeve sunmaktır. Sınırın sıcak bir tonda ve tutarlı biçimde konması çocuğun neyi bekleyeceğini bilmesini sağlar.',
+      'Kısa, net ve sakin cümleler kullanın; çocuğun hissettiği duyguyu kabul ederken davranışın sınırını koruyun.',
+    ],
+  },
 ];
 
 /**

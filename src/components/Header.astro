@@ -102,6 +102,11 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
   .toggle :global(svg) { width: 1.25rem; height: 1.25rem; }
   .toggle :global(.i-close) { display: none; }
 
+  @media (max-width: 1100px) and (min-width: 861px) {
+    .nav ul a { padding-inline: var(--s-3); font-size: var(--t-small); }
+    .nav ul a::after { left: var(--s-3); right: var(--s-3); }
+    .cta { padding: 0.7rem 1.2rem; }
+  }
   @media (max-width: 860px) {
     .cta { display: none; }
     .toggle { display: grid; position: relative; z-index: 2; }
@@ -115,7 +120,7 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
       align-items: stretch;
       gap: var(--s-3);
       padding: var(--s-2) var(--gutter) var(--s-5);
-      border-radius: 0 0 1.5rem 1.5rem;
+      border-radius: 0 0 var(--r-lg) var(--r-lg);
       background: rgb(255 251 246 / 0.98);
       backdrop-filter: blur(14px);
       border-top: 1px solid var(--c-line);
