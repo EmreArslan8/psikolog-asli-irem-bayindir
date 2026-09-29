@@ -104,26 +104,18 @@ const thumb = (id: string, q = 'maxresdefault') => `https://i.ytimg.com/vi/${id}
   .more {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--s-3);
+    gap: var(--s-4);
     max-width: 917px;
     margin: var(--s-5) auto 0;
   }
   .item {
     display: grid;
-    grid-template-columns: 5.5rem 1fr;
-    align-items: center;
+    align-content: start;
     gap: var(--s-3);
-    min-height: 5rem;
-    padding: var(--s-3);
-    border-radius: var(--r-card);
-    background: var(--c-surface);
-    border: 1px solid var(--c-line);
-    box-shadow: var(--shadow-sm);
-    transition: box-shadow 0.3s, border-color 0.3s;
   }
-  .item:hover { border-color: var(--c-coral-light); box-shadow: var(--shadow-md); }
-  .th { position: relative; aspect-ratio: 16 / 9; border-radius: var(--r-md); overflow: hidden; background: #000; }
+  .th { position: relative; aspect-ratio: 16 / 9; border-radius: var(--r-card); box-shadow: var(--shadow-sm); transition: box-shadow 0.3s, transform 0.4s var(--ease); overflow: hidden; background: #000; }
   .th img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
+  .item:hover .th { box-shadow: var(--shadow-md); transform: translateY(-3px); }
   .item:hover .th img { transform: scale(1.06); }
   .mini {
     position: absolute;
@@ -138,14 +130,14 @@ const thumb = (id: string, q = 'maxresdefault') => `https://i.ytimg.com/vi/${id}
     color: #fff;
   }
   .mini svg { width: 0.85rem; height: 0.85rem; margin-left: 0.1rem; }
-  .t { font-family: var(--f-display); font-size: var(--t-small); line-height: 1.35; text-wrap: balance; }
+  .t { padding: 0 var(--s-1); font-family: var(--f-display); font-size: var(--t-body); line-height: 1.35; text-wrap: balance; }
   .item:hover .t { color: var(--c-accent); }
   .th.logo { display: grid; place-items: center; background: var(--c-cream); }
-  .yt { width: 2.25rem; height: auto; }
+  .yt { width: 3.5rem; height: auto; }
   .channel .t { display: inline-flex; align-items: center; gap: var(--s-2); }
   .channel .t :global(svg) { width: 1rem; height: 1rem; flex: none; transition: transform 0.3s var(--ease); }
   .channel:hover .t :global(svg) { transform: translateX(4px); }
-  @media (max-width: 800px) { .more { grid-template-columns: 1fr; } .item { grid-template-columns: 7rem 1fr; } }
+  @media (max-width: 800px) { .more { grid-template-columns: 1fr; max-width: 28rem; } }
   @media (max-width: 560px) { .play { width: 4rem; height: 4rem; } }
   @media (prefers-reduced-motion: reduce) { .player img, .th img, .play { transition: none; } }
 </style>

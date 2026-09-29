@@ -11,26 +11,92 @@ import pjExt from '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-san
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { site, institution } from '../data/site';
+import { site, institution, services } from '../data/site';
 
-interface Props { title?: string; description?: string }
+interface Props {
+  title?: string;
+  description?: string;
+  /** Arama sonuçlarından hariç tut (404 vb.) */
+  noindex?: boolean;
+  type?: 'website' | 'article';
+  publishedTime?: string;
+  /** Sayfaya özel ek JSON-LD düğümleri (örn. BlogPosting) */
+  jsonLd?: Record<string, unknown>[];
+}
 
-const { title, description = site.description } = Astro.props;
+const { title, description = site.description, noindex = false, type = 'website', publishedTime, jsonLd = [] } = Astro.props;
 const fullTitle = title ? `${title} | ${site.name}` : `${site.name} — ${site.tagline}`;
-const canonical = new URL(Astro.url.pathname, site.url).href;
+// Sondaki eğik çizgisiz tek biçim (astro.config: trailingSlash 'never')
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const canonical = new URL(path, site.url).href;
+const ogImage = new URL(site.ogImage, site.url).href;
 
+const crumbNames: Record<string, string> = {
+  hakkimda: 'Hakkımda', hizmetler: 'Hizmetler', atolyeler: 'Atölyeler', blog: 'Blog',
+  iletisim: 'İletişim', randevu: 'Randevu', kvkk: 'KVKK Aydınlatma Metni',
+};
+const segments = path.split('/').filter(Boolean);
+const breadcrumb = segments.length
+  ? {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Ana Sayfa', item: new URL('/', site.url).href },
+        ...segments.map((seg, i) => ({
+          '@type': 'ListItem',
+          position: i + 2,
+          name: i === segments.length - 1 && title ? title : crumbNames[seg] ?? seg,
+          item: new URL('/' + segments.slice(0, i + 1).join('/'), site.url).href,
+        })),
+      ],
+    }
+  : null;
+
+const id = (hash: string) => `${site.url}/#${hash}`;
+const sameAs = site.contact.instagram ? [site.contact.instagram] : undefined;
+const { hoursSpec, city, region } = site.contact;
+
+// schema.org'da "Psychologist" tipi yok; yerel işletme için ProfessionalService kullanılır.
 const schema = {
   '@context': 'https://schema.org',
-  '@type': 'Psychologist',
-  name: site.name,
-  description: site.description,
-  url: site.url,
-  telephone: site.contact.phone,
-  email: site.contact.email,
-  areaServed: 'TR',
-  worksFor: { '@type': 'Organization', name: institution.name, ...(institution.url && { url: institution.url }) },
-  ...(site.contact.address && { address: site.contact.address }),
-  ...(site.contact.instagram && { sameAs: [site.contact.instagram] }),
+  '@graph': [
+    { '@type': 'WebSite', '@id': id('website'), url: site.url, name: site.name, inLanguage: 'tr-TR', publisher: { '@id': id('business') } },
+    {
+      '@type': 'Person',
+      '@id': id('person'),
+      name: site.shortName,
+      jobTitle: site.title,
+      url: site.url,
+      image: ogImage,
+      worksFor: { '@type': 'Organization', name: institution.name, ...(institution.url && { url: institution.url }) },
+      knowsAbout: services.map((s) => s.title),
+      ...(sameAs && { sameAs }),
+    },
+    {
+      '@type': ['ProfessionalService', 'LocalBusiness'],
+      '@id': id('business'),
+      name: site.name,
+      description: site.description,
+      url: site.url,
+      image: ogImage,
+      telephone: site.contact.phone,
+      email: site.contact.email,
+      founder: { '@id': id('person') },
+      address: { '@type': 'PostalAddress', addressLocality: city, addressRegion: region, addressCountry: 'TR' },
+      areaServed: [
+        { '@type': 'City', name: city },
+        { '@type': 'AdministrativeArea', name: region },
+      ],
+      openingHoursSpecification: { '@type': 'OpeningHoursSpecification', dayOfWeek: hoursSpec.days, opens: hoursSpec.opens, closes: hoursSpec.closes },
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Danışmanlık hizmetleri',
+        itemListElement: services.map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.title, description: s.summary } })),
+      },
+      ...(sameAs && { sameAs }),
+    },
+    ...(breadcrumb ? [breadcrumb] : []),
+    ...jsonLd,
+  ],
 };
 ---
 <!doctype html>
@@ -47,12 +113,22 @@ const schema = {
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#fff8f1" />
-    <meta property="og:type" content="website" />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <meta property="og:type" content={type} />
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
     <meta property="og:locale" content="tr_TR" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={site.name} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
   </head>
   <body>

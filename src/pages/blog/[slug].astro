@@ -1,15 +1,31 @@
 ---
 import Base from '../../layouts/Base.astro';
 import CtaBand from '../../components/CtaBand.astro';
-import { posts } from '../../data/site';
+import { posts, site } from '../../data/site';
 
 export function getStaticPaths() {
   return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
 }
 const { post } = Astro.props;
+const url = new URL(`/blog/${post.slug}`, site.url).href;
+const article = {
+  '@type': 'BlogPosting',
+  '@id': `${url}#article`,
+  mainEntityOfPage: url,
+  headline: post.title,
+  description: post.excerpt,
+  articleSection: post.category,
+  datePublished: post.date,
+  dateModified: post.date,
+  inLanguage: 'tr-TR',
+  image: new URL(post.image ?? site.ogImage, site.url).href,
+  author: { '@id': `${site.url}/#person` },
+  publisher: { '@id': `${site.url}/#business` },
+  articleBody: post.body.join('\n\n'),
+};
 const fmt = new Intl.DateTimeFormat('tr-TR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 ---
-<Base title={post.title} description={post.excerpt}>
+<Base title={post.title} description={post.excerpt} type="article" publishedTime={post.date} jsonLd={[article]}>
   <article class="section post">
     <div class="container narrow">
       <a class="back" href="/blog">← Tüm yazılar</a>

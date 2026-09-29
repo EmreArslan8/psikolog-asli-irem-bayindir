@@ -10,6 +10,8 @@ export const site = {
   shortName: 'Aslı İrem Bayındır',
   title: 'Psikolog',
   tagline: 'Çocuk, ergen ve ebeveyn danışmanlığı',
+  /** Paylaşım görseli (public/ altında, 1200×630) */
+  ogImage: '/og.png',
   description:
     'Psikolog Aslı İrem Bayındır — çocuk, ergen ve ebeveyn danışmanlığı. Yüz yüze ve online görüşmelerle ailenize güvenli, sıcak ve bilimsel bir destek alanı.',
 
@@ -22,6 +24,10 @@ export const site = {
     address: 'İzmit / Kocaeli' as string | null, // TODO: açık adres
     mapsQuery: null as string | null,
     hours: 'Pazartesi–Cumartesi · 10.00–19.00',
+    /** Schema.org için (yukarıdaki metinle aynı tutun) */
+    hoursSpec: { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '10:00', closes: '19:00' },
+    city: 'İzmit',
+    region: 'Kocaeli',
   },
 
 } as const;

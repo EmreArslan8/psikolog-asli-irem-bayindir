@@ -31,10 +31,10 @@ import { workshops } from '../../data/site';
 )}
 
 <style>
-  .workshops { position: relative; }
+  .workshops { position: relative; padding-block: clamp(2.5rem, 1.5rem + 3vw, 4rem); }
   .head {
     max-width: 40rem;
-    margin: 0 auto var(--s-7);
+    margin: 0 auto var(--s-6);
     text-align: center;
   }
   .head .eyebrow { justify-content: center; }
@@ -59,7 +59,7 @@ import { workshops } from '../../data/site';
   }
   h3 { font-size: var(--t-h3); margin-block: var(--s-2) var(--s-3); }
   .text { font-size: var(--t-small); color: var(--c-ink-soft); }
-  .cta { margin: var(--s-7) auto 0; display: flex; width: fit-content; }
+  .cta { margin: var(--s-6) auto 0; display: flex; width: fit-content; }
   @media (max-width: 960px) {
     .list { grid-template-columns: 1fr; }
   }

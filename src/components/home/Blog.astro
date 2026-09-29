@@ -23,12 +23,12 @@ const latest = [...posts].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 
 )}
 
 <style>
-  .blog { position: relative; overflow: hidden; isolation: isolate; }
+  .blog { position: relative; overflow: hidden; isolation: isolate; padding-block: clamp(2.5rem, 1.5rem + 3vw, 4rem); }
   .orb { position: absolute; z-index: -1; left: -8rem; bottom: -4rem; width: 26rem; height: 26rem; border-radius: 50%; background: rgb(255 190 160 / 0.5); filter: blur(80px); pointer-events: none; }
-  .head { text-align: center; margin-bottom: var(--s-7); }
+  .head { text-align: center; margin-bottom: var(--s-6); }
   .head .eyebrow { justify-content: center; }
   h2 { font-size: var(--t-h2); margin-top: var(--s-4); }
-  .all { display: flex; width: fit-content; margin: var(--s-7) auto 0; align-items: center; gap: var(--s-2); font-weight: 500; border-bottom: 1px solid var(--c-accent); transition: gap 0.3s var(--ease); }
+  .all { display: flex; width: fit-content; margin: var(--s-6) auto 0; align-items: center; gap: var(--s-2); font-weight: 500; border-bottom: 1px solid var(--c-accent); transition: gap 0.3s var(--ease); }
   .all:hover { gap: var(--s-3); }
   .all :global(svg) { width: 1rem; height: 1rem; }
   .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); }
