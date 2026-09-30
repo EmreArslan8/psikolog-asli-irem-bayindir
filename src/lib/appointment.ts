@@ -1,6 +1,9 @@
+import { appointmentHtml, appointmentText } from './appointment-email.ts';
+
 type Settings = {
   apiKey?: string;
   from?: string;
+  fromName?: string;
   to?: string;
   services: string[];
 };
@@ -111,7 +114,7 @@ export async function sendAppointment(
   if (message.length > 2000) return reply(400, 'Mesajınız en fazla 2000 karakter olabilir.');
   if (value('kvkk') !== 'on') return reply(400, 'Lütfen aydınlatma metnini okuyup onaylayın.');
 
-  const { apiKey, from, to } = settings;
+  const { apiKey, from, to, fromName } = settings;
   if (!apiKey || !from || !to || !emailPattern.test(from) || !emailPattern.test(to)) {
     return reply(503, unavailable);
   }
@@ -119,22 +122,19 @@ export async function sendAppointment(
     return reply(429, 'Çok fazla talep gönderdiniz. Lütfen 10 dakika sonra tekrar deneyin.');
   }
 
+  const mail = { name, phone, email, service, meeting, client, date, message };
   try {
     const result = await (dependencies.send || fetch)('https://api.resend.com/emails', {
       method: 'POST',
       headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
       signal: AbortSignal.timeout(10000),
       body: JSON.stringify({
-        from,
+        from: fromName ? `${fromName.replace(/[\r\n<>"]/g, '')} <${from}>` : from,
         to: [to],
         subject: 'Yeni randevu talebi — Aslı İrem Bayındır',
         ...(email && { reply_to: email }),
-        text: [
-          `Ad Soyad: ${name}`, `Telefon: ${phone}`, `E-posta: ${email || 'Belirtilmedi'}`,
-          `Hizmet: ${service}`, `Görüşme tercihi: ${meeting}`,
-          `Görüşme kimin için: ${client || 'Belirtilmedi'}`, `Tercih edilen gün: ${date || 'Belirtilmedi'}`,
-          '', 'Mesaj:', message || 'Belirtilmedi', '', 'Formdaki aydınlatma onayı: Verildi',
-        ].join('\n'),
+        html: appointmentHtml(mail),
+        text: appointmentText(mail),
       }),
     });
     const data = await result.json();

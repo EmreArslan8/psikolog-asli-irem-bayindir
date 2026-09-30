@@ -1,6 +1,6 @@
 ---
 import Icon from '../Icon.astro';
-import HeroArt from './HeroArt.astro';
+import Portrait from '../Portrait.astro';
 import { site } from '../../data/site';
 ---
 <section class="hero">
@@ -21,7 +21,7 @@ import { site } from '../../data/site';
     </div>
 
     <div class="visual">
-      <div class="float"><HeroArt /></div>
+      <Portrait />
     </div>
   </div>
 </section>
@@ -89,14 +89,11 @@ import { site } from '../../data/site';
   .facts li { display: inline-flex; align-items: center; gap: var(--s-2); }
   .facts :global(svg) { width: 1.05rem; height: 1.05rem; color: var(--c-accent); }
 
-  .visual { position: relative; width: 100%; max-width: 30rem; justify-self: center; }
-  .float { animation: float 7s ease-in-out infinite; }
-  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  .visual { position: relative; width: 100%; max-width: 23rem; justify-self: center; }
   @media (max-width: 800px) {
     .hero { padding-block: var(--s-5) calc(var(--s-section) + var(--s-4)); }
     .grid { grid-template-columns: 1fr; gap: var(--s-6); }
-    .visual { max-width: 22rem; order: -1; }
+    .visual { max-width: 17rem; order: -1; }
     h1 { max-width: 16ch; }
   }
-  @media (prefers-reduced-motion: reduce) { .float { animation: none; } }
 </style>

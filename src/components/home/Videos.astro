@@ -16,15 +16,15 @@ const thumb = (id: string, q = 'maxresdefault') => `https://i.ytimg.com/vi/${id}
       </div>
 
       <div class="stage reveal">
-        <div class="player" data-player data-id={main.id}>
-          <img src={thumb(main.id)} alt="" width="1280" height="720" loading="lazy" onerror={`this.onerror=null;this.src='${thumb(main.id, 'hqdefault')}'`} />
+        <div class="player" data-player data-id={main.id} data-title={main.title} data-start={main.start} data-end={main.end}>
+          <img src={main.poster ?? thumb(main.id)} alt="" width="1280" height="720" loading="lazy" onerror={`this.onerror=null;this.src='${thumb(main.id, 'hqdefault')}'`} />
           <button type="button" class="play" aria-label={`Videoyu oynat: ${main.title}`}>
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor" /></svg>
           </button>
         </div>
       </div>
 
-      {(
+      {(rest.length > 0 || youtubeChannel) && (
         <>
         <div class="more reveal">
           {rest.map((v) => (
@@ -36,12 +36,12 @@ const thumb = (id: string, q = 'maxresdefault') => `https://i.ytimg.com/vi/${id}
               <span class="t">{v.title}</span>
             </a>
           ))}
-          <a class="item channel" href={youtubeChannel ?? 'https://www.youtube.com/'} target="_blank" rel="noopener">
+          {youtubeChannel && <a class="item channel" href={youtubeChannel} target="_blank" rel="noopener">
             <span class="th logo" aria-hidden="true">
               <svg class="yt" viewBox="0 0 68 48"><rect width="68" height="48" rx="12" fill="var(--c-dark)" /><path d="M27 14v20l18-10z" fill="#fff" /></svg>
             </span>
             <span class="t">YouTube kanalıma katılın <Icon name="arrow" /></span>
-          </a>
+          </a>}
         </div>
         </>
       )}
@@ -53,8 +53,12 @@ const thumb = (id: string, q = 'maxresdefault') => `https://i.ytimg.com/vi/${id}
   document.querySelectorAll<HTMLElement>('[data-player]').forEach((box) => {
     box.querySelector('.play')?.addEventListener('click', () => {
       const iframe = document.createElement('iframe');
-      iframe.src = `https://www.youtube-nocookie.com/embed/${box.dataset.id}?autoplay=1&rel=0`;
-      iframe.title = 'YouTube videosu';
+      const params = new URLSearchParams({ autoplay: '1', rel: '0' });
+      if (box.dataset.start) params.set('start', box.dataset.start);
+      if (box.dataset.end) params.set('end', box.dataset.end);
+      iframe.src = `https://www.youtube-nocookie.com/embed/${box.dataset.id}?${params}`;
+      iframe.title = box.dataset.title || 'YouTube videosu';
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
       iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
       iframe.allowFullscreen = true;
       box.replaceChildren(iframe);

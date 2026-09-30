@@ -7,7 +7,7 @@ const items = [
   { icon: 'whatsapp', label: 'WhatsApp', value: 'Hemen yazın', href: whatsappUrl(), external: true },
   { icon: 'phone', label: 'Telefon', value: contact.phoneDisplay, href: `tel:${contact.phone}` },
   { icon: 'mail', label: 'E-posta', value: contact.email, href: `mailto:${contact.email}` },
-  contact.address && { icon: 'pin', label: 'Adres', value: contact.address },
+  contact.address && { icon: 'pin', label: 'Adres', value: contact.address, href: contact.mapsUrl ?? undefined, external: true },
   { icon: 'clock', label: 'Çalışma saatleri', value: contact.hours },
   contact.instagram && { icon: 'instagram', label: 'Instagram', value: 'Takip edin', href: contact.instagram, external: true },
 ].filter(Boolean) as { icon: any; label: string; value: string; href?: string; external?: boolean }[];

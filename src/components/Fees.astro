@@ -2,8 +2,8 @@
 import Icon from './Icon.astro';
 import { fees, whatsappUrl } from '../data/site';
 
-interface Props { flat?: boolean; row?: boolean }
-const { flat = false, row = false } = Astro.props;
+interface Props { flat?: boolean; row?: boolean; showAppointment?: boolean }
+const { flat = false, row = false, showAppointment = true } = Astro.props;
 const rows = [
   { label: 'Online', icon: 'video', price: fees.online },
   { label: 'Yüz yüze', icon: 'pin', price: fees.faceToFace },
@@ -23,7 +23,7 @@ const tl = new Intl.NumberFormat('tr-TR');
       ))}
     </ul>
     <div class="actions">
-      <a class="btn btn-primary" href="/randevu">Randevu Talebi <Icon name="arrow" /></a>
+      {showAppointment && <a class="btn btn-primary" href="/randevu">Randevu Talebi <Icon name="arrow" /></a>}
       <a class="btn btn-whatsapp" href={whatsappUrl()} target="_blank" rel="noopener"><Icon name="whatsapp" /> WhatsApp'tan Yaz</a>
     </div>
   </aside>

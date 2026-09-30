@@ -1,0 +1,35 @@
+---
+import Icon from '../Icon.astro';
+import BookCover from '../BookCover.astro';
+import { books } from '../../data/books';
+---
+<section class="section books">
+  <div class="container">
+    <div class="head reveal">
+      <p class="eyebrow">Ebeveynler için kitap önerileri</p>
+      <h2>Birlikte büyürken <em class="accent">bir sayfa açın</em></h2>
+    </div>
+    <div class="cards glass-group">
+      {books.map((b, i) => (
+        <a class="card glass-card reveal" href={`/kitap-onerileri#${b.id}`}>
+          <BookCover title={b.title} author={b.author} index={i} />
+          <span class="discover">Kitabı incele <Icon name="arrow" /></span>
+        </a>
+      ))}
+    </div>
+    <a class="btn btn-primary cta reveal" href="/kitap-onerileri">Yaşa ve ihtiyaca göre kitap seçin <Icon name="arrow" /></a>
+  </div>
+</section>
+<style>
+  .books { padding-block: clamp(2.5rem, 1.5rem + 3vw, 4rem); }
+  .head { max-width: 40rem; margin: 0 auto var(--s-6); text-align: center; }
+  .head .eyebrow { justify-content: center; }
+  h2 { font-size: var(--t-h2); margin-top: var(--s-4); }
+  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-5); }
+  .card { display: flex; flex-direction: column; align-items: flex-start; padding: var(--s-6); border-radius: var(--r-card); }
+  .discover { display: inline-flex; align-items: center; gap: var(--s-3); font-size: var(--t-small); margin-top: var(--s-4); align-self: center; }
+  .discover :global(svg) { width: 1rem; height: 1rem; color: var(--c-accent); }
+  .cta { display: flex; width: fit-content; margin: var(--s-6) auto 0; }
+  @media (max-width: 1200px) { .cards { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 540px) { .cards { grid-template-columns: 1fr; } }
+</style>

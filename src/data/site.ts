@@ -9,20 +9,24 @@ export const site = {
   name: 'Psikolog Aslı İrem Bayındır',
   shortName: 'Aslı İrem Bayındır',
   title: 'Psikolog',
+  professionalTitle: 'Psikolog · Aile Danışmanı · Çocuk Gelişimi Uzmanı',
   tagline: 'Çocuk, ergen ve ebeveyn danışmanlığı',
   /** Paylaşım görseli (public/ altında, 1200×630) */
   ogImage: '/og.png',
   description:
-    'Psikolog Aslı İrem Bayındır — çocuk, ergen ve ebeveyn danışmanlığı. Yüz yüze ve online görüşmelerle ailenize güvenli, sıcak ve bilimsel bir destek alanı.',
+    'Psikolog, aile danışmanı ve çocuk gelişimi uzmanı Aslı İrem Bayındır. İzmit’te çocuk, ergen ve ebeveyn danışmanlığı; yüz yüze ve online görüşmeler.',
 
   contact: {
-    phoneDisplay: '0500 000 00 00', // TODO
-    phone: '+905000000000', // TODO
-    whatsapp: '905000000000', // TODO: ülke koduyla, + olmadan
-    email: 'info@asliirembayindir.com', // TODO
+    phoneDisplay: '0532 717 30 92',
+    phone: '+905327173092',
+    whatsapp: '905327173092',
+    email: 'psk.aslirembayindir@gmail.com',
     instagram: 'https://www.instagram.com/psk.aslirembayindir/' as string | null,
-    address: 'İzmit / Kocaeli' as string | null, // TODO: açık adres
-    mapsQuery: null as string | null,
+    address: 'Yahyakaptan, Seymen Cd. No: 46, 41310 İzmit/Kocaeli' as string | null,
+    streetAddress: 'Yahyakaptan, Seymen Cd. No: 46',
+    postalCode: '41310',
+    mapsQuery: '40.7755423,29.9782305' as string | null,
+    mapsUrl: 'https://www.google.com/maps/place/Psikoloji+%C4%B0zmit+Aile+Dan%C4%B1%C5%9Fma+Merkezi/@40.7755423,29.9782305,17z/data=!3m1!4b1!4m6!3m5!1s0x14cb512a020e0d13:0xf74bedc6b328e7be!8m2!3d40.7755423!4d29.9782305!16s%2Fg%2F11fsf7xf8x?hl=tr' as string | null,
     hours: 'Pazartesi–Cumartesi · 10.00–19.00',
     /** Schema.org için (yukarıdaki metinle aynı tutun) */
     hoursSpec: { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '10:00', closes: '19:00' },
@@ -62,7 +66,7 @@ export const services: Service[] = [
   {
     slug: 'cocuk',
     image: '/illustrations/cocuk.svg',
-    chips: ['Deneyimsel Oyun Terapisi', 'Duygu Regülasyonu', 'Sosyal Uyum'],
+    chips: ['Çocuk Merkezli Oyun Terapisi', 'Duygu Regülasyonu', 'Sosyal Uyum'],
     title: 'Çocuk Danışmanlığı',
     age: '3–12 yaş',
     summary:
@@ -117,28 +121,48 @@ export const steps = [
 
 
 export const about = {
-  photo: null as string | null, // ör. '/images/asli-irem-bayindir.webp'
+  photo: '/asli-irem-bayindir.jpg' as string | null,
   intro:
-    'Merhaba, ben Aslı İrem Bayındır. Çocukların, gençlerin ve ailelerin zorlandıkları dönemlerde kendilerini daha iyi anlamalarına ve güçlü yanlarını keşfetmelerine eşlik ediyorum.',
+    'Merhaba, ben Aslı İrem Bayındır. Psikolog, aile danışmanı ve çocuk gelişimi uzmanıyım. Çocuklarla oyun odasında, yetişkinlerle atölyelerde buluşuyorum.',
   paragraphs: [
-    'Çocukla çalışmanın aileyle çalışmaktan ayrı düşünülemeyeceğine inanıyorum. Bu yüzden görüşmelerimde çocuğun ya da gencin dünyasını anlamaya çalışırken ebeveynleri de sürecin doğal bir parçası olarak görüyorum.',
-    'Oyun temelli yaklaşımlar ve bilimsel olarak etkinliği gösterilmiş yöntemlerle, her çocuğun kendi hızına ve ihtiyacına uygun bir yol haritası oluşturmaya özen gösteriyorum.',
+    'Işık Üniversitesi Psikoloji Bölümü’nden 2024 yılında onur derecesiyle mezun oldum. 2026 yılında İstanbul Üniversitesi Çocuk Gelişimi Bölümü’nü tamamladım. Psikoloji ve çocuk gelişimi eğitimlerimi, çocukların ve ailelerin ihtiyaçlarını anlamak için bir araya getiriyorum.',
+    'Mesleki eğitimlerim arasında aile danışmanlığı, çocuk merkezli oyun terapisi ve süpervizyon, bilişsel davranışçı terapi, çocuk değerlendirme testleri, özgül öğrenme güçlüğü bataryası ve MOXO dikkat testi yer alıyor.',
+    'Özel eğitim ve rehabilitasyon alanındaki deneyimimin ardından Mediofis ve Psikoloji İzmit Aile Danışmanlığı Merkezi’nde çalışmalarımı sürdürüyorum. Araştırmayı, öğrenmeyi ve mesleki gelişimimi sürdürmeyi önemsiyorum.',
   ],
-  // TODO: müşteriden gelecek gerçek eğitim bilgileriyle değiştirilecek
   education: [
-    { title: 'Psikoloji Lisans', place: 'Üniversite adı' },
-    { title: 'Klinik Psikoloji Yüksek Lisans', place: 'Üniversite adı' },
+    { title: 'Psikoloji Lisans', place: 'Işık Üniversitesi · 2024 · Onur derecesi' },
+    { title: 'Çocuk Gelişimi', place: 'İstanbul Üniversitesi (AUZEF) · 2026' },
   ],
-  trainings: ['Oyun Terapisi Eğitimi', 'Çocuk ve Ergenlerde Bilişsel Davranışçı Terapi', 'Ebeveyn Danışmanlığı Eğitimi'],
+  trainings: [
+    'Aile Danışmanlığı Eğitimi — Marmara Üniversitesi',
+    'Çocuk Merkezli Oyun Terapisi ve Süpervizyon — Mehmet Teber',
+    'Bilişsel Davranışçı Terapi — Şükrü Uğuz / Marmara Psikoloji',
+    'Çocuk Değerlendirme Testleri Bataryası — Türk Psikologlar Derneği',
+    'Özgül Öğrenme Güçlüğü Bataryası — Türk Psikologlar Derneği',
+    'MOXO Dikkat Testi — MOXO Türkiye / Moxo360',
+    'Uzman Eğitici Eğitimi — Millî Eğitim Bakanlığı',
+  ],
+  experience: [
+    { name: 'Psikoloji İzmit Aile Danışmanlığı Merkezi', period: 'Mayıs 2026 – devam ediyor' },
+    { name: 'Mediofis', period: 'Şubat 2026 – devam ediyor' },
+    { name: 'Yankım Özel Eğitim ve Rehabilitasyon Merkezi', period: 'Mayıs 2024 – Nisan 2026' },
+  ],
+  internships: [
+    { name: 'Yugen Danışmanlık', detail: 'Klinik psikoloji stajı', period: 'Nisan – Mayıs 2026' },
+    { name: 'Hera Psikoterapi Enstitüsü', detail: 'Staj', period: 'Temmuz – Ağustos 2023' },
+    { name: 'Meltem Kırmızı / Kocaeli Nörofeedback', detail: 'Staj', period: 'Ağustos – Eylül 2022' },
+    { name: 'İzmit Psikoteknik Merkezi', detail: 'Staj', period: 'Temmuz – Ağustos 2022' },
+    { name: 'Roza Psikoloji', detail: 'Klinik psikoloji stajı', period: 'Haziran – Temmuz 2022' },
+  ],
 };
 
 /** Çalıştığı kurum — Hakkımda sayfası, footer ve schema (worksFor) buradan beslenir. */
 export const institution = {
-  name: 'Aile Danışmanlığı Merkezi', // TODO: kurumun tam adı
+  name: 'Psikoloji İzmit Aile Danışmanlığı Merkezi',
   url: null as string | null, // TODO: kurumun web sitesi
   role: 'Psikolog',
-  text: 'Bir aile danışmanlığı merkezinde çocuk, ergen ve ebeveynlerle bireysel görüşmeler yürütüyor; ailelere yönelik grup çalışmaları ve atölyeler düzenliyorum.',
-  duties: ['Çocuk ve ergen görüşmeleri', 'Ebeveyn danışmanlığı', 'Aile görüşmeleri', 'Grup çalışmaları ve atölyeler'],
+  text: 'Mayıs 2026’dan bu yana Psikoloji İzmit Aile Danışmanlığı Merkezi’nde çalışıyorum. Şubat 2026’da başladığım Mediofis çalışmalarımı da sürdürüyorum.',
+  duties: ['Psikoloji lisans eğitimi', 'Çocuk gelişimi eğitimi', 'Aile danışmanlığı eğitimi', 'Çocuk merkezli oyun terapisi ve süpervizyon'],
 };
 
 /** Görüşme ücretleri (TL). Bir alan null ise o satır gizlenir. */
@@ -170,11 +194,21 @@ export type Workshop = {
   image?: string;
 };
 
-// TODO: müşteriden gelecek gerçek atölye listesiyle değiştirilecek
+export const workshopCollective = {
+  name: 'Mind Society Collective',
+  instagram: 'https://www.instagram.com/mind.society.collective/',
+  handle: '@mind.society.collective',
+  poster: '/mind-society-collective-atolyeler.jpeg',
+  region: 'Sakarya · Kocaeli',
+  intro: 'Ekiplerinize iyi gelecek, ilham verecek ve bağları güçlendirecek özel atölye deneyimleri tasarlıyoruz.',
+};
+
 export const workshops: Workshop[] = [
-  { title: 'Duygularımı Tanıyorum', audience: 'Çocuk atölyesi · 5–10 yaş', text: 'Oyun ve hikâyelerle çocukların duygularını tanıması, adlandırması ve ifade etmesi üzerine grup çalışması.', date: '12 Ekim 2026', time: '11.00 – 12.30', format: 'Yüz yüze', price: 500 },
-  { title: 'Sınır Koymak İlişkiye Alan Açar', audience: 'Ebeveyn atölyesi', text: 'Sevgiyle ve tutarlılıkla sınır koymanın yollarını, gerçek örnekler üzerinden birlikte konuştuğumuz buluşma.', date: '19 Ekim 2026', time: '20.00 – 21.30', format: 'Online', price: 400 },
-  { title: 'Sınav Kaygısıyla Baş Etmek', audience: 'Ergen atölyesi · 13–18 yaş', text: 'Kaygıyı tanıma, düzenleme ve çalışma rutini oluşturma üzerine uygulamalı bir atölye.', date: '26 Ekim 2026', time: '15.00 – 16.30', format: 'Yüz yüze', price: 500 },
+  { title: 'Seramik Atölyesi', audience: 'Kurumsal atölye', text: 'Yaratıcı üretim ve odaklanma için seramikle buluşuyoruz. Birlikte üretmeye ve ekip bağlarını güçlendirmeye alan açıyoruz.' },
+  { title: 'Yoga Atölyesi', audience: 'Kurumsal atölye', text: 'Beden farkındalığı ve denge odaklı bir deneyim. Ekipler için iyi oluşu destekleyen bir buluşma alanı oluşturuyoruz.' },
+  { title: 'Tuval Atölyesi', audience: 'Kurumsal atölye', text: 'Duyguları ifade etmeye ve yaratıcılığa alan açan bir üretim deneyimi. Renkler ve tuval aracılığıyla birlikte keşfediyoruz.' },
+  { title: 'Konuşma Atölyesi', audience: 'Kurumsal atölye', text: 'İletişimi güçlendirme ve farkındalık odaklı buluşmalar. Dinlemeye, paylaşmaya ve ekip içindeki bağları geliştirmeye alan açıyoruz.' },
+  { title: 'Kintsugi Atölyesi', audience: 'Kurumsal atölye', text: 'Kendini onarma ve yeniden bütünleşme temalarını kintsugi üzerinden ele alıyoruz. Üretirken bu temalar üzerine düşünmeye alan açıyoruz.' },
 ];
 
 export type Post = {
@@ -226,13 +260,11 @@ export const posts: Post[] = [
 ];
 
 /**
- * YouTube videoları — link olarak gösterilir (sayfaya oynatıcı yüklenmez, site hızlı kalır).
+ * YouTube videoları — ana oynatıcı yalnızca tıklanınca yüklenir.
  * id: youtube.com/watch?v=<id> kısmı. Liste boşsa bölüm gizlenir.
+ * start ve end: videonun başından itibaren saniye olarak oynatma aralığı.
  */
-// TODO: DEMO — başka uzmanlara ait yer tutucu videolar; müşterinin kendi videolarıyla değiştirilecek
-export const videos: { id: string; title: string }[] = [
-  { id: '4T5zvjrZq6k', title: 'Çocuklarda duygu kontrolü nasıl sağlanır?' },
-  { id: '_-gvCAgkDRw', title: 'Çocuğuma nasıl sınır koyarım?' },
-  { id: 'vjhfDPEjr6w', title: 'Ergenlik döneminde ebeveyn–çocuk ilişkisi' },
+export const videos: { id: string; title: string; start?: number; end?: number; poster?: string }[] = [
+  { id: 'Nuruunck-rI', title: 'Çocuklar neden şiddete yöneliyor?', start: 2609, end: 3555, poster: '/video-nuruunck-44-29.jpg' },
 ];
 export const youtubeChannel: string | null = null; // TODO: kanal linki

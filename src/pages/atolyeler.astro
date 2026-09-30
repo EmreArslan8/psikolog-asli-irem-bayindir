@@ -2,167 +2,105 @@
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Icon from '../components/Icon.astro';
-import CtaBand from '../components/CtaBand.astro';
-import { workshops, payment, whatsappUrl } from '../data/site';
+import { workshops, workshopCollective, site } from '../data/site';
 
-const tl = new Intl.NumberFormat('tr-TR');
+const icons = ['leaf', 'heart', 'leaf', 'users', 'heart'] as const;
+const mailUrl = `mailto:${site.contact.email}?subject=${encodeURIComponent('Kurumsal atölye talebi')}`;
 ---
-<Base title="Atölyeler" description="Çocuklar, gençler ve ebeveynler için küçük gruplarla düzenlenen uygulamalı atölyeler. Tarih, ücret ve kayıt bilgileri.">
+<Base title="Atölyeler" description="Mind Society Collective ile Sakarya ve Kocaeli’de kurumsal seramik, yoga, tuval, konuşma ve kintsugi atölyeleri.">
   <PageHero eyebrow="Atölyeler">
-    <Fragment slot="title">Birlikte öğrenmek, <em class="accent">birlikte büyümek</em></Fragment>
-    Küçük gruplarla, uygulamalı atölyeler. Kayıt için WhatsApp'tan yazmanız yeterli.
+    <Fragment slot="title">Birlikte üretmek, <em class="accent">birlikte güçlenmek</em></Fragment>
+    Kurumlar ve ekipler için yaratıcılığa, farkındalığa ve paylaşıma alan açan atölyeler.
   </PageHero>
 
-  <section class="section list">
-    <div class="container">
-      {workshops.map((w, i) => (
-        <article class="card reveal">
-          <div class:list={['poster', `t${i % 3}`]}>
-            {w.image ? (
-              <img src={w.image} alt={`${w.title} afişi`} width="400" height="500" loading="lazy" />
-            ) : (
-              <div class="auto">
-                <Icon name={i % 3 === 0 ? 'heart' : i % 3 === 1 ? 'users' : 'leaf'} />
-                <span class="aud-tag">{w.audience.split(' · ')[0]}</span>
-                <strong>{w.title}</strong>
-                {w.price && <span class="pill">{tl.format(w.price)}₺</span>}
-              </div>
-            )}
-          </div>
-
-          <div class="info">
-            <h2>{w.title}</h2>
-            <p class="aud">{w.audience}</p>
-            <p class="text">{w.text}</p>
-          </div>
-
-          <div class="buy">
-            <ul class="meta">
-              <li><Icon name="clock" /><span>{w.date ?? 'Tarih yakında'}{w.time && <><br />Saat {w.time}</>}</span></li>
-              {w.format && <li><Icon name={w.format === 'Online' ? 'video' : 'pin'} />{w.format}</li>}
-            </ul>
-            <p class="price">{w.price ? `${tl.format(w.price)}₺` : 'Bilgi için yazın'}</p>
-            <a class="btn btn-primary" href={whatsappUrl(`Merhaba, "${w.title}" atölyesine kayıt olmak istiyorum.`)} target="_blank" rel="noopener">
-              Kayıt Ol <Icon name="arrow" />
-            </a>
-          </div>
-        </article>
-      ))}
+  <section class="section collective">
+    <div class="container brand">
+      <a class="poster reveal" href={workshopCollective.poster} target="_blank" rel="noopener" aria-label="Mind Society Collective kurumsal atölye afişini büyüt">
+        <img src={workshopCollective.poster} alt="Mind Society Collective logosu ve seramik, yoga, tuval, konuşma, kintsugi kurumsal atölye afişi" width="1170" height="1531" loading="lazy" />
+      </a>
+      <div class="intro reveal">
+        <p class="eyebrow">{workshopCollective.region}</p>
+        <h2>{workshopCollective.name}</h2>
+        <p class="lead">{workshopCollective.intro}</p>
+        <p class="text">Seramikten yogaya, tuvalden konuşma ve kintsugiye uzanan atölyelerle ekiplerin birlikte üretebileceği ve paylaşabileceği buluşmalar planlıyoruz.</p>
+        <ul class="benefits">
+          <li><Icon name="check" />Ekip bağlarını güçlendirme</li>
+          <li><Icon name="check" />Motivasyon ve iyi oluşu destekleme</li>
+          <li><Icon name="check" />Yaratıcılık ve üretkenliğe alan açma</li>
+        </ul>
+        <a class="instagram" href={workshopCollective.instagram} target="_blank" rel="noopener noreferrer"><Icon name="instagram" />{workshopCollective.handle}<Icon name="arrow" /></a>
+      </div>
     </div>
   </section>
 
-  {payment.iban && (
-    <section class="section pay">
-      <div class="container box reveal">
-        <div>
-          <p class="eyebrow">Ödeme</p>
-          <h2>Kayıt ve ödeme nasıl yapılır?</h2>
-          <ol>
-            <li>WhatsApp'tan katılmak istediğiniz atölyeyi yazın.</li>
-            <li>Ücreti aşağıdaki hesaba havale/EFT ile gönderin.</li>
-            <li>Dekontu WhatsApp'tan iletin; kaydınız onaylansın.</li>
-          </ol>
-        </div>
-        <div class="bank">
-          <p class="k">Hesap sahibi</p>
-          <p class="v">{payment.holder}</p>
-          <p class="k">Banka</p>
-          <p class="v">{payment.bank}</p>
-          <p class="k">IBAN</p>
-          <p class="iban" data-iban>{payment.iban}</p>
-          <button class="btn btn-ghost copy" type="button" data-copy>IBAN'ı kopyala</button>
-        </div>
+  <section class="section types">
+    <div class="container">
+      <div class="head reveal">
+        <p class="eyebrow">Atölye deneyimleri</p>
+        <h2>Ekibinizle <em class="accent">yeni bir deneyim</em></h2>
       </div>
-    </section>
-  )}
+      <div class="cards glass-group">
+        {workshops.map((w, i) => (
+          <article class="card glass-card reveal">
+            <span class="symbol"><Icon name={icons[i % icons.length]} /></span>
+            <h3>{w.title}</h3>
+            <p>{w.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
 
-  <CtaBand />
+  <section class="section contact">
+    <div class="container contact-box reveal">
+      <div>
+        <p class="eyebrow">Birlikte güzel işler yapalım</p>
+        <h2>Ekibiniz için bir atölye planlayalım.</h2>
+        <p>Atölye içeriği, tarih ve katılım detayları için e-posta ya da Instagram üzerinden bize ulaşabilirsiniz.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-primary" href={mailUrl}><Icon name="mail" />E-posta gönder</a>
+        <a class="btn btn-ghost" href={workshopCollective.instagram} target="_blank" rel="noopener noreferrer"><Icon name="instagram" />Instagram’dan yazın</a>
+      </div>
+    </div>
+  </section>
 </Base>
 
-<script>
-  const btn = document.querySelector<HTMLButtonElement>('[data-copy]');
-  const iban = document.querySelector<HTMLElement>('[data-iban]');
-  btn?.addEventListener('click', async () => {
-    try {
-      await navigator.clipboard.writeText(iban!.textContent!.replace(/\s/g, ''));
-      btn.textContent = 'Kopyalandı ✓';
-    } catch {
-      btn.textContent = 'Kopyalanamadı, elle seçin';
-    }
-    setTimeout(() => (btn.textContent = "IBAN'ı kopyala"), 2500);
-  });
-</script>
-
 <style>
-  .list { padding-top: var(--s-8); }
-  .list .container { display: grid; gap: var(--s-4); }
-  .card {
-    display: grid;
-    grid-template-columns: 15rem 1fr 15rem;
-    gap: var(--s-7);
-    align-items: center;
-    padding: var(--s-5);
-    border-radius: var(--r-card);
-    background: var(--c-surface);
-    border: 1px solid var(--c-line);
-    box-shadow: var(--shadow-sm);
-  }
-  .poster {
-    aspect-ratio: 4 / 5;
-    border-radius: calc(var(--r-card) - 0.25rem);
-    overflow: hidden;
-    transition: transform 0.5s var(--ease);
-  }
-  .card:hover .poster { transform: translateY(-4px) rotate(-1deg); }
-  .poster img { width: 100%; height: 100%; object-fit: cover; }
-  .auto {
-    height: 100%;
-    display: grid;
-    align-content: center;
-    justify-items: start;
-    gap: var(--s-3);
-    padding: var(--s-5);
-    color: var(--c-ink);
-  }
-  .t0 { background: linear-gradient(160deg, #fde1d6, #f9b8a4); }
-  .t1 { background: linear-gradient(160deg, #fbe9dc, #f5cdb8); }
-  .t2 { background: linear-gradient(160deg, #ffe6d9, #f59a82); }
-  .auto :global(svg) { width: 2.5rem; height: 2.5rem; color: var(--c-accent); }
-  .aud-tag { font-size: var(--t-eyebrow); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; }
-  .auto strong { font-family: var(--f-display); font-weight: 500; font-size: var(--t-h3); line-height: 1.2; }
-  .pill { padding: 0.35rem 0.9rem; border-radius: var(--r-pill); background: #fff; font-weight: 600; font-size: var(--t-small); }
+  .collective { padding-top: var(--s-8); }
+  .brand { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: var(--s-8); align-items: center; }
+  .poster { display: block; max-width: 27rem; border-radius: var(--r-card); overflow: hidden; box-shadow: var(--shadow-md); border: 1px solid var(--c-line); }
+  .poster img { display: block; width: 100%; height: auto; }
   h2 { font-size: var(--t-h2); line-height: var(--lh-snug); }
-  .aud { margin-top: var(--s-2); font-size: var(--t-eyebrow); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--c-muted); }
-  .text { margin-top: var(--s-4); color: var(--c-ink-soft); max-width: 36rem; }
-  .buy { display: grid; gap: var(--s-4); }
-  .meta { list-style: none; padding: 0; display: grid; gap: var(--s-3); }
-  .meta li { display: flex; align-items: flex-start; gap: var(--s-3); line-height: 1.4; }
-  .meta :global(svg) { width: 1.4rem; height: 1.4rem; flex: none; color: var(--c-accent); margin-top: 0.1rem; }
-  .price { font-family: var(--f-display); font-size: var(--t-h2); line-height: 1; }
-  .buy .btn { justify-content: center; }
-
-  .pay { padding-top: 0; }
-  .box {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: var(--s-7);
-    align-items: start;
-    padding-block: var(--s-7);
-    border-block: 1px solid var(--c-line);
+  .intro h2 { margin-block: var(--s-3) var(--s-5); }
+  .lead { font-family: var(--f-display); font-size: var(--t-h3); line-height: 1.5; }
+  .text { margin-top: var(--s-4); color: var(--c-ink-soft); }
+  .benefits { list-style: none; padding: 0; display: grid; gap: var(--s-3); margin-block: var(--s-5); color: var(--c-ink-soft); }
+  .benefits li { display: flex; gap: var(--s-3); align-items: center; }
+  .benefits :global(svg) { width: 1.1rem; height: 1.1rem; flex: none; color: var(--c-accent); }
+  .instagram { display: inline-flex; flex-wrap: wrap; gap: var(--s-3); align-items: center; border-bottom: 1px solid var(--c-accent); padding-bottom: var(--s-2); font-size: var(--t-small); }
+  .instagram :global(svg) { width: 1.1rem; height: 1.1rem; }
+  .types { padding-top: 0; }
+  .head { margin-bottom: var(--s-6); }
+  .head h2 { margin-top: var(--s-3); }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); }
+  .card { padding: var(--s-6); border-radius: var(--r-card); }
+  .symbol { display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 50%; background: var(--c-cream); color: var(--c-accent); margin-bottom: var(--s-5); }
+  .symbol :global(svg) { width: 1.5rem; height: 1.5rem; }
+  h3 { font-size: var(--t-h3); margin-bottom: var(--s-3); }
+  .card p { color: var(--c-ink-soft); font-size: var(--t-small); }
+  .contact { padding-top: 0; }
+  .contact-box { display: grid; grid-template-columns: 1fr auto; gap: var(--s-7); align-items: center; padding-block: var(--s-7); border-block: 1px solid var(--c-line); }
+  .contact-box h2 { margin-block: var(--s-3) var(--s-4); max-width: 27rem; }
+  .contact-box p:last-child { color: var(--c-ink-soft); max-width: 36rem; }
+  .actions { display: grid; gap: var(--s-3); }
+  .actions .btn { justify-content: center; }
+  @media (max-width: 900px) {
+    .brand { grid-template-columns: 1fr; gap: var(--s-7); }
+    .poster { max-width: 24rem; margin-inline: auto; }
+    .cards { grid-template-columns: repeat(2, 1fr); }
+    .contact-box { grid-template-columns: 1fr; }
+    .actions { justify-self: start; }
   }
-  .box h2 { font-size: var(--t-h2); margin-block: var(--s-3) var(--s-5); }
-  ol { padding-left: 1.2rem; display: grid; gap: var(--s-3); color: var(--c-ink-soft); }
-  .bank { padding: var(--s-5); border-radius: var(--r-card); background: var(--c-surface); border: 1px solid var(--c-line); box-shadow: var(--shadow-sm); }
-  .k { font-size: var(--t-eyebrow); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--c-muted); margin-top: var(--s-3); }
-  .k:first-child { margin-top: 0; }
-  .v { font-weight: 500; }
-  .iban { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 1.05rem; letter-spacing: 0.04em; word-break: break-all; }
-  .copy { margin-top: var(--s-4); }
-  @media (max-width: 800px) {
-    .card { grid-template-columns: 1fr; gap: var(--s-5); }
-    .poster { max-width: 18rem; }
-    .box { grid-template-columns: 1fr; gap: var(--s-5); }
-  }
-  @media (max-width: 1000px) and (min-width: 801px) { .card { grid-template-columns: 12rem 1fr; } .buy { grid-column: 2; grid-template-columns: 1fr 1fr; align-items: center; } }
-  @media (prefers-reduced-motion: reduce) { .poster { transition: none; } }
+  @media (max-width: 600px) { .cards { grid-template-columns: 1fr; } }
 </style>

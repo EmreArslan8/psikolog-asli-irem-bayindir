@@ -8,12 +8,12 @@ import { workshops } from '../../data/site';
     <Ribbon variant="wave" style="left:-10%;bottom:4%;width:48rem;opacity:.4" />
     <div class="container">
       <div class="head reveal">
-        <p class="eyebrow">Atölyeler</p>
-        <h2>Birlikte öğrenmek, <em class="accent">birlikte büyümek</em></h2>
+        <p class="eyebrow">Mind Society Collective</p>
+        <h2>Ekipler için <em class="accent">birlikte üretmek</em></h2>
       </div>
-      <ul class="list">
+      <ul class="list glass-group">
         {workshops.map((w, i) => (
-          <li class="item reveal" style={`transition-delay:${i * 100}ms`}>
+          <li class="item glass-card reveal" style={`transition-delay:${i * 100}ms`}>
             <span class="n">0{i + 1}</span>
             <div>
               <p class="aud">{w.audience}</p>
@@ -24,7 +24,7 @@ import { workshops } from '../../data/site';
         ))}
       </ul>
       <a class="btn btn-primary cta reveal" href="/atolyeler">
-        Tüm atölyeler ve kayıt <Icon name="arrow" />
+        Atölyeleri keşfedin <Icon name="arrow" />
       </a>
     </div>
   </section>
@@ -46,9 +46,6 @@ import { workshops } from '../../data/site';
     gap: var(--s-5);
     padding: var(--s-6);
     border-radius: var(--r-card);
-    background: var(--c-surface);
-    border: 1px solid var(--c-line);
-    box-shadow: var(--shadow-sm);
   }
   .n { font-family: var(--f-display); font-size: var(--t-h2); color: var(--c-accent); line-height: 1; }
   .aud {

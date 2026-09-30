@@ -1,0 +1,192 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import BookCover from '../components/BookCover.astro';
+import { books, ageGuides, topicGuides } from '../data/books';
+const topicsFor = (id: string) => [...new Set(ageGuides.flatMap((g) => g.recommendations.filter((r) => r.bookId === id).flatMap((r) => r.topics)))];
+const guideData = JSON.stringify({ ageGuides, topicGuides });
+---
+<Base title="Ebeveynler İçin Kitap Önerileri" description="Yaşa ve ihtiyaca göre ebeveynlik kitaplarını keşfedin. Bağ kurma, iletişim, sınır koyma ve duygu düzenleme için okuma önerileri.">
+  <PageHero eyebrow="Ebeveynler için kitap önerileri">
+    <Fragment slot="title">Bugün size <em class="accent">hangi kitap eşlik etsin?</em></Fragment>
+    Çocuğunuzun yaşını ve ilgilendiğiniz konuyu seçin; size uygun kitapları birlikte bulalım.
+  </PageHero>
+
+  <section class="section library" data-library data-guides={guideData}>
+    <div class="container">
+      <div class="filters glass-card">
+        <div class="mobile-age">
+          <label class="sr-only" for="book-age">Çocuğunuzun yaşı</label>
+          <div class="select-wrap">
+          <select id="book-age" data-mobile-age>
+            <option value="all">Tüm yaşlar</option>
+            {ageGuides.map((g, i) => <option value={String(i)}>{g.age}</option>)}
+            <option value="teen">Ergenlik</option>
+          </select>
+          <span class="select-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m7 10 5 5 5-5" /></svg></span>
+          </div>
+        </div>
+        <fieldset class="age-filter">
+          <legend>Çocuğunuzun yaşı</legend>
+          <div class="age-buttons">
+            <button type="button" data-age="all" aria-pressed="true">Tümü</button>
+            {ageGuides.map((g, i) => <button type="button" data-age={String(i)} aria-pressed="false">{g.age}</button>)}
+            <button type="button" data-age="teen" aria-pressed="false">Ergenlik</button>
+          </div>
+        </fieldset>
+        <div class="topic-filter">
+          <label for="book-topic">İlgilendiğiniz konu</label>
+          <div class="select-wrap">
+          <select id="book-topic" data-topic>
+            <option value="all">Tüm konular</option>
+            {topicGuides.map((g, i) => <option value={String(i)}>{g.topic}</option>)}
+          </select>
+          <span class="select-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m7 10 5 5 5-5" /></svg></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="results-bar">
+        <p class="context" data-context>Her kitabın farklı bir odağı var. İhtiyacınıza en yakın olanla başlayabilirsiniz.</p>
+        <span class="count" data-count role="status" aria-live="polite">4 kitap</span>
+      </div>
+
+      <div class="book-grid glass-group">
+        {books.map((b, i) => (
+          <article class="book-card glass-card" id={b.id} data-book={b.id}>
+            <BookCover title={b.title} author={b.author} index={i} compactOnMobile />
+            <div class="book-copy">
+              <h3 class="mobile-title">{b.title}</h3>
+              <p class="mobile-author">{b.author}</p>
+              <p class="description">{b.description}</p>
+            </div>
+            <details class="book-details">
+              <summary>Konuları gör <Icon name="plus" /></summary>
+              <ul data-book-topics>{topicsFor(b.id).map((t) => <li>{t}</li>)}</ul>
+            </details>
+          </article>
+        ))}
+      </div>
+
+      <div class="empty glass-card" data-empty hidden>
+        <h2 data-empty-title>Bu seçim için kitap bulunamadı.</h2>
+        <p data-empty-text>Yaş veya konu seçimini değiştirerek diğer önerileri inceleyebilirsiniz.</p>
+        <button class="btn btn-primary" type="button" data-reset>Tüm kitapları göster <Icon name="arrow" /></button>
+      </div>
+      <button class="clear" type="button" data-clear hidden>Seçimleri temizle</button>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const library = document.querySelector<HTMLElement>('[data-library]');
+  if (library) {
+    type Recommendation = { bookId: string; topics: string[] };
+    type AgeGuide = { intro: string; question: string; recommendations: Recommendation[] };
+    type TopicGuide = { topic: string; bookIds: string[] };
+    const guides: { ageGuides: AgeGuide[]; topicGuides: TopicGuide[] } = JSON.parse(library.dataset.guides!);
+    const buttons = [...library.querySelectorAll<HTMLButtonElement>('[data-age]')];
+    const select = library.querySelector<HTMLSelectElement>('[data-topic]')!;
+    const mobileAge = library.querySelector<HTMLSelectElement>('[data-mobile-age]')!;
+    const cards = [...library.querySelectorAll<HTMLElement>('[data-book]')];
+    const context = library.querySelector<HTMLElement>('[data-context]')!;
+    const count = library.querySelector<HTMLElement>('[data-count]')!;
+    const empty = library.querySelector<HTMLElement>('[data-empty]')!;
+    const clear = library.querySelector<HTMLButtonElement>('[data-clear]')!;
+    let age = 'all';
+
+    const update = () => {
+      const ageGuide = age !== 'all' && age !== 'teen' ? guides.ageGuides[Number(age)] : undefined;
+      const topicGuide = select.value !== 'all' ? guides.topicGuides[Number(select.value)] : undefined;
+      let visible = 0;
+      cards.forEach((card) => {
+        const id = card.dataset.book!;
+        const ageMatch = ageGuide?.recommendations.find((r) => r.bookId === id);
+        const show = age !== 'teen' && (!ageGuide || Boolean(ageMatch)) && (!topicGuide || topicGuide.bookIds.includes(id));
+        card.hidden = !show;
+        if (show) visible++;
+        const themes = ageMatch?.topics ?? [...new Set(guides.ageGuides.flatMap((g) => g.recommendations.filter((r) => r.bookId === id).flatMap((r) => r.topics)))];
+        const list = card.querySelector<HTMLElement>('[data-book-topics]')!;
+        list.replaceChildren(...themes.map((theme) => {
+          const li = document.createElement('li');
+          li.textContent = theme;
+          return li;
+        }));
+        const details = card.querySelector<HTMLDetailsElement>('details')!;
+        details.open = false;
+      });
+      buttons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.age === age)));
+      mobileAge.value = age;
+      context.textContent = ageGuide ? `${ageGuide.intro} “${ageGuide.question}”` : topicGuide ? `${topicGuide.topic} konusunda başlayabileceğiniz kitaplar.` : 'Her kitabın farklı bir odağı var. İhtiyacınıza en yakın olanla başlayabilirsiniz.';
+      count.textContent = `${visible} kitap`;
+      empty.hidden = visible > 0;
+      const teen = age === 'teen';
+      empty.querySelector<HTMLElement>('[data-empty-title]')!.textContent = teen ? 'Ergenlik için ayrı bir okuma listesi gerekiyor.' : 'Bu yaş ve konu seçimi birlikte bir öneriyle eşleşmedi.';
+      empty.querySelector<HTMLElement>('[data-empty-text]')!.textContent = teen ? 'Bu dört kitap doğrudan ergenliğe odaklanmıyor. Ergenle iletişim, dijital yaşam, özgürlük ve sınırlar, arkadaşlık ilişkileri ve akademik baskı konularına özel kaynakları değerlendirmek daha uygun olur.' : 'Konuyu “Tüm konular” olarak değiştirerek bu yaş grubundaki kitapları inceleyebilirsiniz.';
+      clear.hidden = age === 'all' && select.value === 'all';
+    };
+    buttons.forEach((button) => button.addEventListener('click', () => { age = button.dataset.age!; update(); }));
+    select.addEventListener('change', update);
+    mobileAge.addEventListener('change', () => { age = mobileAge.value; update(); });
+    const reset = () => { age = 'all'; select.value = 'all'; update(); };
+    clear.addEventListener('click', reset);
+    library.querySelector('[data-reset]')?.addEventListener('click', () => { reset(); (mobileAge.offsetParent ? mobileAge : buttons[0]).focus(); });
+    // Kitap bağlantısıyla gelen ziyaretçinin seçimi her zaman görünür olsun.
+    if (window.location.hash) document.getElementById(window.location.hash.slice(1))?.scrollIntoView({ block: 'center' });
+  }
+</script>
+
+<style>
+  .library { padding-top: var(--s-7); }
+  .mobile-age, .mobile-title, .mobile-author { display: none; }
+  .filters { display: flex; justify-content: space-between; align-items: end; flex-wrap: wrap; gap: var(--s-5); padding: var(--s-5); border-radius: var(--r-card); }
+  fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+  legend, label { display: block; font-size: var(--t-small); font-weight: 600; margin-bottom: var(--s-3); color: var(--c-ink-soft); }
+  .age-buttons { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+  .age-buttons button { padding: 0.65rem 1rem; border: 1px solid var(--c-line); border-radius: var(--r-btn); background: rgb(255 255 255 / 0.4); color: var(--c-ink-soft); font: inherit; font-size: var(--t-small); cursor: pointer; }
+  .age-buttons button[aria-pressed='true'] { background: var(--c-primary); border-color: var(--c-primary); color: var(--c-primary-ink); }
+  .topic-filter { min-width: min(100%, 16rem); }
+  .select-wrap { position: relative; width: 100%; max-width: 23rem; }
+  select { appearance: none; -webkit-appearance: none; display: block; width: 100%; padding: 0.65rem 2.5rem 0.65rem 0.85rem; border: 1px solid var(--c-line); border-radius: var(--r-btn); background: var(--c-surface); color: var(--c-ink); font: inherit; font-size: var(--t-small); cursor: pointer; }
+  .select-arrow { position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); display: grid; place-items: center; width: 1rem; height: 1rem; color: var(--c-ink-soft); pointer-events: none; }
+  .select-arrow svg { display: block; width: 100%; height: 100%; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .results-bar { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s-5); margin-block: var(--s-5) var(--s-6); }
+  .context { font-size: var(--t-small); color: var(--c-ink-soft); max-width: 50rem; }
+  .count { white-space: nowrap; font-size: var(--t-small); color: var(--c-muted); }
+  .book-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s-5); align-items: start; }
+  .book-card { border-radius: var(--r-card); padding: var(--s-5); scroll-margin-top: 7rem; }
+  .book-card[hidden], .empty[hidden], .clear[hidden] { display: none; }
+  .description { color: var(--c-ink-soft); font-size: var(--t-small); margin-top: var(--s-4); }
+  .book-details { margin-top: var(--s-5); border-top: 1px solid var(--c-line); padding-top: var(--s-4); }
+  summary { list-style: none; display: flex; justify-content: space-between; align-items: center; gap: var(--s-3); cursor: pointer; font-size: var(--t-small); font-weight: 500; }
+  summary::-webkit-details-marker { display: none; }
+  summary :global(svg) { width: 1rem; height: 1rem; flex: none; color: var(--c-accent); }
+  details[open] summary :global(svg) { rotate: 45deg; }
+  .book-details ul { padding-left: var(--s-4); margin-top: var(--s-4); display: grid; gap: var(--s-2); color: var(--c-ink-soft); font-size: var(--t-small); }
+  .empty { border-radius: var(--r-card); padding: var(--s-7); max-width: 45rem; margin-inline: auto; text-align: center; }
+  .empty h2 { font-size: var(--t-h3); }
+  .empty p { color: var(--c-ink-soft); margin-block: var(--s-4) var(--s-5); }
+  .clear { display: block; margin: var(--s-5) auto 0; border: 0; background: none; color: var(--c-ink-soft); text-decoration: underline; text-underline-offset: 0.25em; font: inherit; font-size: var(--t-small); cursor: pointer; }
+  @media (max-width: 1200px) { .book-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 600px) {
+    .library { padding-top: var(--s-5); padding-bottom: var(--s-7); }
+    .filters { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: var(--s-2); padding: var(--s-3); }
+    .age-filter { display: none; }
+    .mobile-age { display: block; min-width: 0; }
+    .topic-filter { min-width: 0; }
+    .topic-filter label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+    .select-wrap { max-width: none; }
+    select { min-height: 44px; font-size: 0.8125rem; padding-left: var(--s-3); text-overflow: ellipsis; }
+    .results-bar { gap: var(--s-3); margin-block: var(--s-4); }
+    .context { font-size: 0.8125rem; }
+    .book-grid { grid-template-columns: 1fr; gap: var(--s-3); }
+    .book-card { display: grid; grid-template-columns: 6rem minmax(0, 1fr); column-gap: var(--s-4); padding: var(--s-4); align-items: start; }
+    .mobile-title { display: block; font-size: 1rem; line-height: 1.25; }
+    .mobile-author { display: block; font-size: 0.7rem; line-height: 1.4; color: var(--c-ink-soft); margin-top: var(--s-1); }
+    .description { font-size: 0.8125rem; margin-top: var(--s-2); }
+    .book-details { grid-column: 1 / -1; margin-top: var(--s-2); padding-top: var(--s-2); }
+    summary { min-height: 44px; }
+    .empty { padding: var(--s-5); }
+  }
+</style>

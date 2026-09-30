@@ -3,7 +3,6 @@ import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import ContactForm from '../components/ContactForm.astro';
 import Fees from '../components/Fees.astro';
-import { whatsappUrl } from '../data/site';
 ---
 <Base title="Randevu" description="Psikolog Aslı İrem Bayındır ile ön görüşme ve randevu talebi. Yüz yüze ya da online görüşme seçenekleri.">
   <PageHero eyebrow="Randevu">
@@ -17,8 +16,7 @@ import { whatsappUrl } from '../data/site';
         <h2>Randevu öncesinde</h2>
         <p>Görüşme talebinizi kısaca paylaşmanız yeterli. Detayları görüşmede birlikte ele alabiliriz.</p>
         <p>Uygun gün ve saati belirlemek için sizinle iletişime geçeceğim.</p>
-        <div class="fees"><Fees /></div>
-        <a class="contact-link" href={whatsappUrl()} target="_blank" rel="noopener noreferrer">WhatsApp’tan ulaşın <span aria-hidden="true">↗</span></a>
+        <div class="fees"><Fees showAppointment={false} /></div>
       </aside>
       <div class="reveal"><ContactForm /></div>
     </div>
@@ -31,6 +29,5 @@ import { whatsappUrl } from '../data/site';
   .grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: var(--s-7); align-items: start; }
   h2 { font-size: var(--t-h3); margin-bottom: var(--s-5); }
   aside p { color: var(--c-ink-soft); font-size: var(--t-small); margin-bottom: var(--s-4); }
-  .contact-link { display: inline-block; margin-top: var(--s-2); color: var(--c-primary); font-size: var(--t-small); text-decoration: underline; text-underline-offset: 0.25em; }
   @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
 </style>

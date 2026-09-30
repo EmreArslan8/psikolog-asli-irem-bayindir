@@ -3,9 +3,7 @@ import { site } from '../data/site';
 ---
 <a class="logo" href="/" aria-label={`${site.name} — Ana sayfa`}>
   <span class="mark">
-    <svg viewBox="0 0 64 40" aria-hidden="true">
-      <path d="M2 30c10 2 18-2 22-9 4-7 1-15-5-15s-8 9-2 16c6 7 17 9 26 5 9-4 14-12 19-16" fill="none" stroke="var(--c-accent)" stroke-width="3" stroke-linecap="round" />
-    </svg>
+    <img src="/logo-mark.png" alt="" width="48" height="48" />
   </span>
   <span class="text">
     <span class="role">{site.title}</span>
@@ -22,11 +20,10 @@ import { site } from '../data/site';
     height: 3rem;
     flex: none;
     border-radius: 50%;
-    background: var(--c-cream);
-    transition: transform 0.5s var(--ease), background 0.3s;
+    transition: transform 0.5s var(--ease);
   }
-  .mark svg { width: 1.75rem; height: auto; }
-  .logo:hover .mark { transform: rotate(-10deg) scale(1.05); background: var(--c-accent-soft); }
+  .mark img { width: 100%; height: 100%; object-fit: contain; }
+  .logo:hover .mark { transform: scale(1.05); }
   .text { display: flex; flex-direction: column; line-height: 1.15; }
   .role {
     font-size: 0.6875rem;
