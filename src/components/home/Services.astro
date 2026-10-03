@@ -54,7 +54,7 @@ const tabIcons = { cocuk: 'heart', ergen: 'leaf', ebeveyn: 'users' } as const;
               {s.topics.map((t) => <li><Icon name="check" />{t}</li>)}
             </ul>
             <div class="foot">
-              <a class="more" href={`/hizmetler#${s.slug}`}>Ayrıntılı bilgi <Icon name="arrow" /></a>
+              <a class="more" href={`/hizmetler/${s.slug}`}>{s.title} hakkında <Icon name="arrow" /></a>
             </div>
           </article>
         ))}

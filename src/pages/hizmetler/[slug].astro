@@ -1,0 +1,65 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { services, site } from '../../data/site';
+import { servicePages } from '../../data/service-pages';
+
+export function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service, content: servicePages[service.slug as keyof typeof servicePages] },
+  }));
+}
+const { service, content } = Astro.props;
+const url = new URL(`/hizmetler/${service.slug}`, site.url).href;
+const serviceSchema = {
+  '@type': 'Service', '@id': `${url}#service`,
+  name: content.title, description: content.description, url,
+  serviceType: service.title, provider: { '@id': `${site.url}/#business` },
+  areaServed: { '@type': 'AdministrativeArea', name: site.contact.region },
+};
+---
+<Base title={content.title} seoTitle={`${content.title} | ${site.shortName}`} description={content.description} jsonLd={[serviceSchema]}>
+  <PageHero eyebrow={`Kocaeli · İzmit · ${service.age}`}>
+    <Fragment slot="title">{content.title}</Fragment>
+    {content.intro}
+  </PageHero>
+  <section class="section">
+    <div class="container reading">
+      <a href="/hizmetler">← Tüm danışmanlık hizmetleri</a>
+      {content.sections.map((section) => (
+        <section class="topic"><h2>{section.title}</h2><p>{section.text}</p></section>
+      ))}
+      <section class="topic">
+        <h2>Birlikte ele alabileceğimiz konular</h2>
+        <ul>{service.topics.map((topic) => <li>{topic}</li>)}</ul>
+      </section>
+      <section class="topic">
+        <h2>Sık sorulan sorular</h2>
+        {content.faqs.map((faq) => <div class="answer"><h3>{faq.question}</h3><p>{faq.answer}</p></div>)}
+      </section>
+      <section class="topic">
+        <h2>İzmit’te görüşme ve randevu</h2>
+        <p>Yüz yüze görüşmelerimi Psikoloji İzmit Aile Danışmanlığı Merkezi’nde sürdürüyorum. Adres: {site.contact.address}. Görüşme öncesinde randevu oluşturabilirsiniz.</p>
+        <p><a href="/iletisim">İletişim bilgileri ve yol tarifi</a> · <a href="/hakkimda">Eğitimim ve çalışma yaklaşımım</a></p>
+        <a class="btn btn-primary" href={`/randevu?hizmet=${service.slug}`}>Randevu talebi oluştur</a>
+      </section>
+      <nav class="topic" aria-label="Diğer hizmetler">
+        <h2>Diğer danışmanlık alanları</h2>
+        <ul>{services.filter((other) => other.slug !== service.slug).map((other) => <li><a href={`/hizmetler/${other.slug}`}>{other.title}</a></li>)}</ul>
+      </nav>
+    </div>
+  </section>
+  <CtaBand />
+</Base>
+<style>
+  .reading { max-width: 48rem; }
+  .topic { margin-top: var(--s-7); }
+  h2 { font-size: var(--t-h2); margin-bottom: var(--s-4); }
+  h3 { font-size: var(--t-h3); margin-bottom: var(--s-2); }
+  p, li { color: var(--c-ink-soft); line-height: var(--lh-body); }
+  p + p, .btn { margin-top: var(--s-4); }
+  ul { padding-left: var(--s-5); }
+  .answer + .answer { margin-top: var(--s-5); }
+</style>

@@ -7,7 +7,7 @@ import { workshops, workshopCollective, site } from '../data/site';
 const icons = ['leaf', 'heart', 'leaf', 'users', 'heart'] as const;
 const mailUrl = `mailto:${site.contact.email}?subject=${encodeURIComponent('Kurumsal atölye talebi')}`;
 ---
-<Base title="Atölyeler" description="Mind Society Collective ile Sakarya ve Kocaeli’de kurumsal seramik, yoga, tuval, konuşma ve kintsugi atölyeleri.">
+<Base title="Atölyeler" description="Mind Society Collective ile Sakarya ve Kocaeli’de kurumsal seramik, yoga, tuval, psikolojik farkındalık ve kintsugi atölyeleri.">
   <PageHero eyebrow="Atölyeler">
     <Fragment slot="title">Birlikte üretmek, <em class="accent">birlikte güçlenmek</em></Fragment>
     Kurumlar ve ekipler için yaratıcılığa, farkındalığa ve paylaşıma alan açan atölyeler.
@@ -22,7 +22,7 @@ const mailUrl = `mailto:${site.contact.email}?subject=${encodeURIComponent('Kuru
         <p class="eyebrow">{workshopCollective.region}</p>
         <h2>{workshopCollective.name}</h2>
         <p class="lead">{workshopCollective.intro}</p>
-        <p class="text">Seramikten yogaya, tuvalden konuşma ve kintsugiye uzanan atölyelerle ekiplerin birlikte üretebileceği ve paylaşabileceği buluşmalar planlıyoruz.</p>
+        <p class="text">Seramik, yoga, tuval, psikolojik farkındalık ve kintsugi atölyeleriyle ekiplerin birlikte üretebileceği ve paylaşabileceği buluşmalar planlıyoruz.</p>
         <ul class="benefits">
           <li><Icon name="check" />Ekip bağlarını güçlendirme</li>
           <li><Icon name="check" />Motivasyon ve iyi oluşu destekleme</li>

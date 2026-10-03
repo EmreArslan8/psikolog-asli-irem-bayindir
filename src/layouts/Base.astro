@@ -15,6 +15,8 @@ import { site, institution, services } from '../data/site';
 
 interface Props {
   title?: string;
+  /** Marka eklenmeden kullanılacak tam SEO başlığı. */
+  seoTitle?: string;
   description?: string;
   /** Arama sonuçlarından hariç tut (404 vb.) */
   noindex?: boolean;
@@ -24,8 +26,8 @@ interface Props {
   jsonLd?: Record<string, unknown>[];
 }
 
-const { title, description = site.description, noindex = false, type = 'website', publishedTime, jsonLd = [] } = Astro.props;
-const fullTitle = title ? `${title} | ${site.name}` : `${site.name} — ${site.tagline}`;
+const { title, seoTitle, description = site.description, noindex = false, type = 'website', publishedTime, jsonLd = [] } = Astro.props;
+const fullTitle = seoTitle ?? (title ? `${title} | ${site.name}` : `Kocaeli İzmit Psikolog | ${site.shortName}`);
 // Sondaki eğik çizgisiz tek biçim (astro.config: trailingSlash 'never')
 const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const canonical = new URL(path, site.url).href;
@@ -66,7 +68,7 @@ const schema = {
       name: site.shortName,
       jobTitle: site.professionalTitle,
       url: site.url,
-      image: ogImage,
+      image: new URL('/asli-irem-bayindir.jpg', site.url).href,
       worksFor: { '@type': 'Organization', name: institution.name, ...(institution.url && { url: institution.url }) },
       knowsAbout: services.map((s) => s.title),
       ...(sameAs && { sameAs }),
@@ -80,7 +82,8 @@ const schema = {
       image: ogImage,
       telephone: site.contact.phone,
       email: site.contact.email,
-      founder: { '@id': id('person') },
+      hasMap: site.contact.mapsUrl,
+      geo: { '@type': 'GeoCoordinates', latitude: site.contact.latitude, longitude: site.contact.longitude },
       address: { '@type': 'PostalAddress', streetAddress: site.contact.streetAddress, postalCode: site.contact.postalCode, addressLocality: city, addressRegion: region, addressCountry: 'TR' },
       areaServed: [
         { '@type': 'City', name: city },
@@ -90,7 +93,7 @@ const schema = {
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
         name: 'Danışmanlık hizmetleri',
-        itemListElement: services.map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.title, description: s.summary } })),
+        itemListElement: services.map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.title, description: s.summary, url: new URL(`/hizmetler/${s.slug}`, site.url).href, provider: { '@id': id('business') } } })),
       },
       ...(sameAs && { sameAs }),
     },
@@ -131,7 +134,7 @@ const schema = {
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
-    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, '\\u003c')} />
   </head>
   <body>
     <a class="skip" href="#main">İçeriğe geç</a>

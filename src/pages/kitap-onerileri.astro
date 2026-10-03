@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Icon from '../components/Icon.astro';
 import BookCover from '../components/BookCover.astro';
+import FilmRecommendations from '../components/FilmRecommendations.astro';
 import { books, ageGuides, topicGuides } from '../data/books';
 const topicsFor = (id: string) => [...new Set(ageGuides.flatMap((g) => g.recommendations.filter((r) => r.bookId === id).flatMap((r) => r.topics)))];
 const guideData = JSON.stringify({ ageGuides, topicGuides });
@@ -74,9 +75,11 @@ const guideData = JSON.stringify({ ageGuides, topicGuides });
         <p data-empty-text>Yaş veya konu seçimini değiştirerek diğer önerileri inceleyebilirsiniz.</p>
         <button class="btn btn-primary" type="button" data-reset>Tüm kitapları göster <Icon name="arrow" /></button>
       </div>
+      <a class="teen-films-link btn btn-primary" href="#ergen-film-onerileri" data-teen-films hidden>Birlikte izleyebileceğiniz filmleri keşfedin <Icon name="arrow" /></a>
       <button class="clear" type="button" data-clear hidden>Seçimleri temizle</button>
     </div>
   </section>
+  <FilmRecommendations />
 </Base>
 
 <script>
@@ -122,8 +125,9 @@ const guideData = JSON.stringify({ ageGuides, topicGuides });
       count.textContent = `${visible} kitap`;
       empty.hidden = visible > 0;
       const teen = age === 'teen';
-      empty.querySelector<HTMLElement>('[data-empty-title]')!.textContent = teen ? 'Ergenlik için ayrı bir okuma listesi gerekiyor.' : 'Bu yaş ve konu seçimi birlikte bir öneriyle eşleşmedi.';
-      empty.querySelector<HTMLElement>('[data-empty-text]')!.textContent = teen ? 'Bu dört kitap doğrudan ergenliğe odaklanmıyor. Ergenle iletişim, dijital yaşam, özgürlük ve sınırlar, arkadaşlık ilişkileri ve akademik baskı konularına özel kaynakları değerlendirmek daha uygun olur.' : 'Konuyu “Tüm konular” olarak değiştirerek bu yaş grubundaki kitapları inceleyebilirsiniz.';
+      library.querySelector<HTMLAnchorElement>('[data-teen-films]')!.hidden = !teen;
+      empty.querySelector<HTMLElement>('[data-empty-title]')!.textContent = teen ? 'Ergenlikte sohbeti birlikte izleyerek başlatabilirsiniz.' : 'Bu yaş ve konu seçimi birlikte bir öneriyle eşleşmedi.';
+      empty.querySelector<HTMLElement>('[data-empty-text]')!.textContent = teen ? 'Bu dört kitap doğrudan ergenliğe odaklanmıyor. Aşağıdaki film ve animasyon önerilerinde ergenle iletişim, dijital yaşam, arkadaşlık ve aile ilişkileri üzerine konuşabileceğiniz konular ve sorular bulabilirsiniz.' : 'Konuyu “Tüm konular” olarak değiştirerek bu yaş grubundaki kitapları inceleyebilirsiniz.';
       clear.hidden = age === 'all' && select.value === 'all';
     };
     buttons.forEach((button) => button.addEventListener('click', () => { age = button.dataset.age!; update(); }));
@@ -138,6 +142,8 @@ const guideData = JSON.stringify({ ageGuides, topicGuides });
 </script>
 
 <style>
+  .teen-films-link { margin-top: var(--s-4); }
+  .teen-films-link[hidden] { display: none; }
   .library { padding-top: var(--s-7); }
   .mobile-age, .mobile-title, .mobile-author { display: none; }
   .filters { display: flex; justify-content: space-between; align-items: end; flex-wrap: wrap; gap: var(--s-5); padding: var(--s-5); border-radius: var(--r-card); }
@@ -170,7 +176,9 @@ const guideData = JSON.stringify({ ageGuides, topicGuides });
   .clear { display: block; margin: var(--s-5) auto 0; border: 0; background: none; color: var(--c-ink-soft); text-decoration: underline; text-underline-offset: 0.25em; font: inherit; font-size: var(--t-small); cursor: pointer; }
   @media (max-width: 1200px) { .book-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (max-width: 600px) {
-    .library { padding-top: var(--s-5); padding-bottom: var(--s-7); }
+    .teen-films-link { margin-top: var(--s-4); }
+  .teen-films-link[hidden] { display: none; }
+  .library { padding-top: var(--s-5); padding-bottom: var(--s-7); }
     .filters { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: var(--s-2); padding: var(--s-3); }
     .age-filter { display: none; }
     .mobile-age { display: block; min-width: 0; }

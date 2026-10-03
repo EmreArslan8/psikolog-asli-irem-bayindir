@@ -2,11 +2,11 @@
 /** Çerçeveli portre. Fotoğraf yoksa baş harfli sade bir alan gösterir. */
 import { site, about } from '../data/site';
 
-interface Props { class?: string }
-const { class: className } = Astro.props;
+interface Props { class?: string; contained?: boolean }
+const { class: className, contained = false } = Astro.props;
 const initials = site.shortName.split(' ').map((w) => w[0]).slice(0, 2).join('');
 ---
-<div class:list={['portrait', className]}>
+<div class:list={['portrait', className, { contained }]}>
   <div class="frame">
     {about.photo ? (
       <img src={about.photo} alt={site.name} width="560" height="700" loading="eager" />
@@ -36,6 +36,8 @@ const initials = site.shortName.split(' ').map((w) => w[0]).slice(0, 2).join('')
     background: var(--c-primary);
     box-shadow: var(--shadow-md);
   }
+  .portrait.contained::before { inset: 0; }
+  .portrait.contained .frame { inset: var(--s-2); }
   .frame img { width: 100%; height: 100%; object-fit: cover; }
   .placeholder {
     position: absolute;

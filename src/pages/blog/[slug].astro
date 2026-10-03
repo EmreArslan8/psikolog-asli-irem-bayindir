@@ -1,12 +1,13 @@
 ---
 import Base from '../../layouts/Base.astro';
 import CtaBand from '../../components/CtaBand.astro';
-import { posts, site } from '../../data/site';
+import { posts, site, services } from '../../data/site';
 
 export function getStaticPaths() {
   return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
 }
 const { post } = Astro.props;
+const relatedService = services.find((service) => ({ Çocuk: 'cocuk', Ergen: 'ergen', Ebeveyn: 'ebeveyn' }[post.category] === service.slug));
 const url = new URL(`/blog/${post.slug}`, site.url).href;
 const article = {
   '@type': 'BlogPosting',
@@ -31,7 +32,9 @@ const fmt = new Intl.DateTimeFormat('tr-TR', { day: 'numeric', month: 'long', ye
       <a class="back" href="/blog">← Tüm yazılar</a>
       <p class="meta"><span class="cat">{post.category}</span> <time datetime={post.date}>{fmt.format(new Date(post.date))}</time></p>
       <h1>{post.title}</h1>
+      <p>Yazar: <a href="/hakkimda">{site.name}</a></p>
       <div class="body">{post.body.map((p) => <p>{p}</p>)}</div>
+      {relatedService && <p class="related"><a href={`/hizmetler/${relatedService.slug}`}>İzmit’te {relatedService.title.toLocaleLowerCase('tr-TR')} hakkında bilgi alın →</a></p>}
     </div>
   </article>
   <CtaBand />
@@ -46,4 +49,5 @@ const fmt = new Intl.DateTimeFormat('tr-TR', { day: 'numeric', month: 'long', ye
   .cat { padding: 0.25rem 0.75rem; border-radius: var(--r-pill); background: var(--c-accent-soft); color: var(--c-ink); }
   h1 { font-size: var(--t-h1); line-height: var(--lh-tight); letter-spacing: var(--ls-display); margin-block: var(--s-4) var(--s-6); }
   .body { display: grid; gap: var(--s-5); font-size: var(--t-lead); line-height: var(--lh-body); color: var(--c-ink-soft); }
+  .body, .related { margin-top: var(--s-5); }
 </style>

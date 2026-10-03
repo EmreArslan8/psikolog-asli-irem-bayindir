@@ -6,7 +6,7 @@ import Fees from '../components/Fees.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { services } from '../data/site';
 ---
-<Base title="Hizmetler" description="Çocuk danışmanlığı (3–12 yaş), ergen danışmanlığı (13–18 yaş) ve ebeveyn danışmanlığı. Yüz yüze ve online görüşme seçenekleri.">
+<Base title="Hizmetler" seoTitle="İzmit Çocuk, Ergen ve Ebeveyn Danışmanlığı | Aslı İrem Bayındır" description="Kocaeli İzmit Yahyakaptan’da çocuk, ergen ve ebeveyn danışmanlığı. Çalışma alanlarını, görüşme sürecini ve yüz yüze danışmanlık seçeneklerini inceleyin.">
   <PageHero eyebrow="Hizmetler">
     <Fragment slot="title">Çocuk, ergen ve <em class="accent">ebeveyn</em> danışmanlığı</Fragment>
     Her gelişim dönemine uygun yöntemlerle, ailenin tamamını gözeten bir destek.
@@ -31,6 +31,7 @@ import { services } from '../data/site';
               <p class="body">{s.body}</p>
               <h3>Sık çalışılan konular</h3>
               <ul class="topics">{s.topics.map((t) => <li><Icon name="check" />{t}</li>)}</ul>
+              <a href={`/hizmetler/${s.slug}`}>{s.title}: görüşme süreci ve sık sorulan sorular →</a>
               <a class="btn btn-primary" href={`/randevu?hizmet=${s.slug}`}>Randevu Al <Icon name="arrow" /></a>
             </div>
           </article>

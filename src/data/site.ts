@@ -5,7 +5,7 @@
  */
 
 export const site = {
-  url: 'https://asliirembayindir.com', // TODO: gerçek alan adı
+  url: 'https://www.psikologaslirembayindir.com',
   name: 'Psikolog Aslı İrem Bayındır',
   shortName: 'Aslı İrem Bayındır',
   title: 'Psikolog',
@@ -14,7 +14,7 @@ export const site = {
   /** Paylaşım görseli (public/ altında, 1200×630) */
   ogImage: '/og.png',
   description:
-    'Psikolog, aile danışmanı ve çocuk gelişimi uzmanı Aslı İrem Bayındır. İzmit’te çocuk, ergen ve ebeveyn danışmanlığı; yüz yüze ve online görüşmeler.',
+    'Kocaeli İzmit’te Psikolog Aslı İrem Bayındır ile çocuk, ergen ve ebeveyn danışmanlığı. Yahyakaptan’da yüz yüze görüşmeler ve online danışmanlık için iletişime geçin.',
 
   contact: {
     phoneDisplay: '0532 717 30 92',
@@ -26,6 +26,8 @@ export const site = {
     streetAddress: 'Yahyakaptan, Seymen Cd. No: 46',
     postalCode: '41310',
     mapsQuery: '40.7755423,29.9782305' as string | null,
+    latitude: 40.7755423,
+    longitude: 29.9782305,
     mapsUrl: 'https://www.google.com/maps/place/Psikoloji+%C4%B0zmit+Aile+Dan%C4%B1%C5%9Fma+Merkezi/@40.7755423,29.9782305,17z/data=!3m1!4b1!4m6!3m5!1s0x14cb512a020e0d13:0xf74bedc6b328e7be!8m2!3d40.7755423!4d29.9782305!16s%2Fg%2F11fsf7xf8x?hl=tr' as string | null,
     hours: 'Pazartesi–Cumartesi · 10.00–19.00',
     /** Schema.org için (yukarıdaki metinle aynı tutun) */
@@ -169,7 +171,7 @@ export const institution = {
 // TODO: gerçek ücretler
 export const fees = {
   online: 1500 as number | null,
-  faceToFace: 2000 as number | null,
+  faceToFace: 2400 as number | null,
 };
 
 /** Atölye ödemesi için banka bilgileri. iban null ise ödeme bölümü gizlenir. */
@@ -207,7 +209,7 @@ export const workshops: Workshop[] = [
   { title: 'Seramik Atölyesi', audience: 'Kurumsal atölye', text: 'Yaratıcı üretim ve odaklanma için seramikle buluşuyoruz. Birlikte üretmeye ve ekip bağlarını güçlendirmeye alan açıyoruz.' },
   { title: 'Yoga Atölyesi', audience: 'Kurumsal atölye', text: 'Beden farkındalığı ve denge odaklı bir deneyim. Ekipler için iyi oluşu destekleyen bir buluşma alanı oluşturuyoruz.' },
   { title: 'Tuval Atölyesi', audience: 'Kurumsal atölye', text: 'Duyguları ifade etmeye ve yaratıcılığa alan açan bir üretim deneyimi. Renkler ve tuval aracılığıyla birlikte keşfediyoruz.' },
-  { title: 'Konuşma Atölyesi', audience: 'Kurumsal atölye', text: 'İletişimi güçlendirme ve farkındalık odaklı buluşmalar. Dinlemeye, paylaşmaya ve ekip içindeki bağları geliştirmeye alan açıyoruz.' },
+  { title: 'Psikolojik Farkındalık Atölyesi', audience: 'Kurumsal atölye', text: 'İletişimi güçlendirme ve farkındalık odaklı buluşmalar. Dinlemeye, paylaşmaya ve ekip içindeki bağları geliştirmeye alan açıyoruz.' },
   { title: 'Kintsugi Atölyesi', audience: 'Kurumsal atölye', text: 'Kendini onarma ve yeniden bütünleşme temalarını kintsugi üzerinden ele alıyoruz. Üretirken bu temalar üzerine düşünmeye alan açıyoruz.' },
 ];
 

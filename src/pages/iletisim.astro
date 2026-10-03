@@ -9,7 +9,7 @@ const mapSrc = site.contact.mapsQuery
   ? `https://www.google.com/maps?q=${encodeURIComponent(site.contact.mapsQuery)}&hl=tr&z=16&output=embed`
   : null;
 ---
-<Base title="İletişim" description="Psikolog Aslı İrem Bayındır iletişim bilgileri: telefon, WhatsApp, e-posta ve çalışma saatleri.">
+<Base title="İletişim" seoTitle="İzmit Yahyakaptan Psikolog İletişim | Aslı İrem Bayındır" description="Psikolog Aslı İrem Bayındır’a ulaşın. Yahyakaptan, Seymen Cd. No: 46, İzmit/Kocaeli adresi, yol tarifi, telefon ve randevu bilgileri.">
   <PageHero eyebrow="İletişim">
     <Fragment slot="title">Bana <em class="accent">ulaşın</em></Fragment>
     Sorularınız ya da randevu talebiniz için dilediğiniz kanaldan yazabilirsiniz.
@@ -18,6 +18,8 @@ const mapSrc = site.contact.mapsQuery
   <section class="section wrap">
     <div class="container grid">
       <div class="reveal">
+        <h2>İzmit Yahyakaptan’da yüz yüze görüşme</h2>
+        <p>Yüz yüze görüşmelerimi Psikoloji İzmit Aile Danışmanlığı Merkezi’nde yapıyorum. Gelmeden önce telefon veya WhatsApp üzerinden randevu gününü ve saatini birlikte belirleyebiliriz.</p>
         <ContactInfo />
         {mapSrc && (
           <iframe class="map" src={mapSrc} title="Konum haritası" loading="lazy" referrerpolicy="no-referrer-when-downgrade" />
