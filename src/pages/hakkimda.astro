@@ -35,7 +35,11 @@ import { about, principles } from '../data/site';
       <div class="block reveal">
         <h2>Aldığım eğitimler</h2>
         <ul class="checks">
-          {about.trainings.map((t) => <li><Icon name="check" />{t}</li>)}
+          {about.trainings.map((t) => (
+            <li><Icon name="check" />{t.startsWith('MOXO')
+              ? <a href="https://moxoturkiye.com/" target="_blank" rel="noopener noreferrer">{t}</a>
+              : t}</li>
+          ))}
         </ul>
       </div>
       <div class="block reveal">
@@ -129,6 +133,7 @@ import { about, principles } from '../data/site';
   .checks li { display: flex; gap: var(--s-3); color: var(--c-ink-soft); font-size: var(--t-small); }
   .checks :global(svg) { width: 1.1rem; height: 1.1rem; flex: none; color: var(--c-accent); margin-top: 0.15rem; }
   .checks strong { color: var(--c-ink); }
+  .checks a { color: var(--c-primary); text-decoration: underline; text-underline-offset: 0.2em; }
   @media (max-width: 900px) {
     .grid { grid-template-columns: 1fr; gap: var(--s-7); }
     .grid > :first-child { max-width: 22rem; margin-inline: auto; width: 100%; }

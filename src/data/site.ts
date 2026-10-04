@@ -107,7 +107,7 @@ export const services: Service[] = [
 ];
 
 export const principles = [
-  { title: 'Güvenli alan', text: 'Yargısız, sıcak ve gizliliğe özen gösterilen bir ortam.' },
+  { title: 'Güvenli alan', text: 'Görüşmelerde gizlilik ve mahremiyet ilkelerine mesleki ve yasal çerçevede özen gösterilir.' },
   { title: 'Bilimsel yaklaşım', text: 'Etkinliği araştırmalarla desteklenen yöntemler.' },
   { title: 'Yaşa uygun', text: 'Her gelişim dönemine özel teknikler ve dil.' },
   { title: 'Aileyle birlikte', text: 'Ebeveynin sürecin doğal bir parçası olduğu çalışma.' },
@@ -129,7 +129,7 @@ export const about = {
   paragraphs: [
     'Işık Üniversitesi Psikoloji Bölümü’nden 2024 yılında onur derecesiyle mezun oldum. 2026 yılında İstanbul Üniversitesi Çocuk Gelişimi Bölümü’nü tamamladım. Psikoloji ve çocuk gelişimi eğitimlerimi, çocukların ve ailelerin ihtiyaçlarını anlamak için bir araya getiriyorum.',
     'Mesleki eğitimlerim arasında aile danışmanlığı, çocuk merkezli oyun terapisi ve süpervizyon, bilişsel davranışçı terapi, çocuk değerlendirme testleri, özgül öğrenme güçlüğü bataryası ve MOXO dikkat testi yer alıyor.',
-    'Özel eğitim ve rehabilitasyon alanındaki deneyimimin ardından Mediofis ve Psikoloji İzmit Aile Danışmanlığı Merkezi’nde çalışmalarımı sürdürüyorum. Araştırmayı, öğrenmeyi ve mesleki gelişimimi sürdürmeyi önemsiyorum.',
+    'Özel eğitim ve rehabilitasyon alanındaki deneyimimin ardından Psikoloji İzmit Aile Danışmanlığı Merkezi’nde çalışmalarımı sürdürüyorum. Araştırmayı, öğrenmeyi ve mesleki gelişimimi sürdürmeyi önemsiyorum.',
   ],
   education: [
     { title: 'Psikoloji Lisans', place: 'Işık Üniversitesi · 2024 · Onur derecesi' },
@@ -146,7 +146,6 @@ export const about = {
   ],
   experience: [
     { name: 'Psikoloji İzmit Aile Danışmanlığı Merkezi', period: 'Mayıs 2026 – devam ediyor' },
-    { name: 'Mediofis', period: 'Şubat 2026 – devam ediyor' },
     { name: 'Yankım Özel Eğitim ve Rehabilitasyon Merkezi', period: 'Mayıs 2024 – Nisan 2026' },
   ],
   internships: [
@@ -163,7 +162,7 @@ export const institution = {
   name: 'Psikoloji İzmit Aile Danışmanlığı Merkezi',
   url: null as string | null, // TODO: kurumun web sitesi
   role: 'Psikolog',
-  text: 'Mayıs 2026’dan bu yana Psikoloji İzmit Aile Danışmanlığı Merkezi’nde çalışıyorum. Şubat 2026’da başladığım Mediofis çalışmalarımı da sürdürüyorum.',
+  text: 'Mayıs 2026’dan bu yana Psikoloji İzmit Aile Danışmanlığı Merkezi’nde çalışıyorum.',
   duties: ['Psikoloji lisans eğitimi', 'Çocuk gelişimi eğitimi', 'Aile danışmanlığı eğitimi', 'Çocuk merkezli oyun terapisi ve süpervizyon'],
 };
 
